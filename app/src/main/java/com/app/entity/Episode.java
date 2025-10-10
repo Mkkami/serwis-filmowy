@@ -22,6 +22,6 @@ public class Episode {
     @ManyToOne
     private Series series;
 
-    @ManyToMany
-    private Set<Actor> actors;
+//    @ManyToMany
+//    private Set<Actor> actors;
 }
