@@ -9,7 +9,7 @@ public class Review {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int value;
+    private Integer rating;
     private String comment;
     private LocalDate date;
 
