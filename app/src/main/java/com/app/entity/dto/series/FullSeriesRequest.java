@@ -1,8 +1,7 @@
 package com.app.entity.dto.series;
 
 import com.app.entity.Category;
-import com.app.entity.Review;
-import com.app.entity.dto.ReviewRequest;
+import com.app.entity.dto.review.ReviewRequest;
 
 import java.util.List;
 

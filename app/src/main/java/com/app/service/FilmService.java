@@ -7,6 +7,7 @@ import com.app.entity.dto.DtoMapper;
 import com.app.entity.dto.film.CreateFilmRequest;
 import com.app.entity.dto.film.FilmRequest;
 import com.app.entity.dto.film.FullFilmRequest;
+import com.app.entity.dto.review.NewReviewRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.repository.FilmRepository;
 import com.app.repository.ReviewRepository;
@@ -23,6 +24,9 @@ public class FilmService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     public List<Film> getAllFilms() {
         return filmRepository.getAll();
@@ -71,5 +75,14 @@ public class FilmService {
     public void deleteFilm(Long id) {
         Film film = filmRepository.findById(id).orElseThrow( () -> new FilmNotFoundException(id));
         filmRepository.delete(film);
+    }
+
+    public void addReview(Long id, NewReviewRequest reviewRequest, String name) {
+        Film film = filmRepository.findById(id).orElseThrow(() -> new FilmNotFoundException(id));
+
+        Review review = reviewService.createReview(reviewRequest, name);
+
+        film.addReview(review);
+        filmRepository.save(film);
     }
 }

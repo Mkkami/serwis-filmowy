@@ -1,8 +1,10 @@
 package com.app.service;
 
 import com.app.entity.Category;
+import com.app.entity.Review;
 import com.app.entity.Series;
 import com.app.entity.dto.DtoMapper;
+import com.app.entity.dto.review.NewReviewRequest;
 import com.app.entity.dto.series.CreateSeriesRequest;
 import com.app.entity.dto.series.FullSeriesRequest;
 import com.app.exception.SeriesNotFoundException;
@@ -20,6 +22,9 @@ public class SeriesService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     public List<Series> getAllSeries() {
         return seriesRepository.getAll();
@@ -67,4 +72,12 @@ public class SeriesService {
     }
 
 
+    public void addReview(Long id, NewReviewRequest reviewRequest, String name) {
+        Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
+
+        Review review = reviewService.createReview(reviewRequest, name);
+
+        series.addReview(review);
+        seriesRepository.save(series);
+    }
 }

@@ -1,4 +1,4 @@
-package com.app.entity.dto;
+package com.app.entity.dto.review;
 
 public record ReviewRequest(
         Long id,

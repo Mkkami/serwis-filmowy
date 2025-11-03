@@ -4,10 +4,11 @@ import com.app.entity.Film;
 import com.app.entity.Review;
 import com.app.entity.Series;
 import com.app.entity.dto.film.FullFilmRequest;
+import com.app.entity.dto.review.NewReviewRequest;
+import com.app.entity.dto.review.ReviewRequest;
 import com.app.entity.dto.series.FullSeriesRequest;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class DtoMapper {

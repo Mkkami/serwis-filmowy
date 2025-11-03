@@ -29,6 +29,10 @@ public class Series {
     @ManyToMany
     private List<Review> reviews;
 
+    public void addReview(Review review) {
+        reviews.add(review);
+    }
+
     public Float averageRating() {
         return ((float) reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
     }
