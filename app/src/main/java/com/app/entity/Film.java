@@ -24,7 +24,12 @@ public class Film {
     @ManyToMany
     private List<Category> categories;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="film_review_link",
+            joinColumns = @JoinColumn(name="film_id"),
+            inverseJoinColumns = @JoinColumn(name="review_id")
+    )
     private List<Review> reviews;
 
     public void addReview(Review review) {

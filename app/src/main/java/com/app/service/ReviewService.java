@@ -26,7 +26,10 @@ public class ReviewService {
         User user = userRepository.findByUsername(username);
         review.setUser(user);
 
-        reviewRepository.save(review);
         return review;
+    }
+
+    public void deleteReview() {
+        // TODO
     }
 }

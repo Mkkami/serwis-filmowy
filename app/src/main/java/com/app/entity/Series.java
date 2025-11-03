@@ -26,7 +26,12 @@ public class Series {
     @OneToMany(mappedBy = "series")
     private List<Episode> episodes;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "series_review_link",
+            joinColumns = @JoinColumn(name = "series_id"),
+            inverseJoinColumns = @JoinColumn(name = "review_id")
+    )
     private List<Review> reviews;
 
     public void addReview(Review review) {
