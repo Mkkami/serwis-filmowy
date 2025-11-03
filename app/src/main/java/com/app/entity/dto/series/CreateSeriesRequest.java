@@ -1,7 +1,4 @@
-package com.app.entity.dto;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.annotation.Nullable;
+package com.app.entity.dto.series;
 
 import java.util.List;
 

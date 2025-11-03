@@ -2,7 +2,9 @@ package com.app.service;
 
 import com.app.entity.Category;
 import com.app.entity.Series;
-import com.app.entity.dto.CreateSeriesRequest;
+import com.app.entity.dto.DtoMapper;
+import com.app.entity.dto.series.CreateSeriesRequest;
+import com.app.entity.dto.series.FullSeriesRequest;
 import com.app.exception.SeriesNotFoundException;
 import com.app.repository.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,13 @@ public class SeriesService {
 
     public List<Series> getAllSeries() {
         return seriesRepository.getAll();
+    }
+
+    public FullSeriesRequest getSeries(Long id) {
+        Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
+
+        return DtoMapper.seriesToFullDto(series);
+
     }
 
     public Series createSeries(CreateSeriesRequest SeriesRequest) {
@@ -56,4 +65,6 @@ public class SeriesService {
         seriesRepository.save(series);
         return series;
     }
+
+
 }

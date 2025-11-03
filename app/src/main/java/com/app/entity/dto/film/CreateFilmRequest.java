@@ -1,6 +1,4 @@
-package com.app.entity.dto;
-
-import com.app.entity.Category;
+package com.app.entity.dto.film;
 
 import java.util.List;
 

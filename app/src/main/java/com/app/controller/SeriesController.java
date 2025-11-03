@@ -1,7 +1,8 @@
 package com.app.controller;
 
 import com.app.entity.Series;
-import com.app.entity.dto.CreateSeriesRequest;
+import com.app.entity.dto.series.CreateSeriesRequest;
+import com.app.entity.dto.series.FullSeriesRequest;
 import com.app.exception.SeriesNotFoundException;
 import com.app.service.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,17 @@ public class SeriesController {
     @GetMapping("series")
     public ResponseEntity<List<Series>> getAllSeries() {
         return ResponseEntity.ok(seriesService.getAllSeries());
+    }
+
+    @GetMapping("series/{id}")
+    public ResponseEntity<?> getSeries(@PathVariable Long id) {
+        FullSeriesRequest series;
+        try {
+            series = seriesService.getSeries(id);
+        } catch (SeriesNotFoundException e) {
+            return ResponseEntity.badRequest().body("Series not found");
+        }
+        return ResponseEntity.ok().body(series);
     }
 
     @PostMapping("series")

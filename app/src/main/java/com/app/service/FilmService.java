@@ -2,9 +2,14 @@ package com.app.service;
 
 import com.app.entity.Category;
 import com.app.entity.Film;
-import com.app.entity.dto.CreateFilmRequest;
+import com.app.entity.Review;
+import com.app.entity.dto.DtoMapper;
+import com.app.entity.dto.film.CreateFilmRequest;
+import com.app.entity.dto.film.FilmRequest;
+import com.app.entity.dto.film.FullFilmRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.repository.FilmRepository;
+import com.app.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +26,12 @@ public class FilmService {
 
     public List<Film> getAllFilms() {
         return filmRepository.getAll();
+    }
+
+    public FullFilmRequest getFilm(Long id) {
+        Film film = filmRepository.findById(id).orElseThrow(() -> new FilmNotFoundException(id));
+
+        return DtoMapper.filmToFullDto(film);
     }
 
     public Film createFilm(CreateFilmRequest filmRequest) {
@@ -55,5 +66,10 @@ public class FilmService {
         }
         filmRepository.save(film);
         return film;
+    }
+
+    public void deleteFilm(Long id) {
+        Film film = filmRepository.findById(id).orElseThrow( () -> new FilmNotFoundException(id));
+        filmRepository.delete(film);
     }
 }

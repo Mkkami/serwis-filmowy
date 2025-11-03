@@ -26,4 +26,14 @@ public class Series {
     @OneToMany(mappedBy = "series")
     private List<Episode> episodes;
 
+    @ManyToMany
+    private List<Review> reviews;
+
+    public Float averageRating() {
+        return ((float) reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
+    }
+
+    public Integer countRatings() {
+        return reviews.size();
+    }
 }

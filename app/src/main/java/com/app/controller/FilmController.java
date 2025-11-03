@@ -1,7 +1,8 @@
 package com.app.controller;
 
 import com.app.entity.Film;
-import com.app.entity.dto.CreateFilmRequest;
+import com.app.entity.dto.film.CreateFilmRequest;
+import com.app.entity.dto.film.FullFilmRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.service.FilmService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,17 @@ public class FilmController {
     @GetMapping("film")
     public List<Film> getFilms() {
         return filmService.getAllFilms();
+    }
+
+    @GetMapping("film/{id}")
+    public ResponseEntity<?> getFilm(@PathVariable Long id) {
+        FullFilmRequest film;
+        try {
+            film = filmService.getFilm(id);
+        } catch (FilmNotFoundException e) {
+            return ResponseEntity.badRequest().body("Film not found");
+        }
+        return ResponseEntity.ok().body(film);
     }
 
     @PostMapping("film")
