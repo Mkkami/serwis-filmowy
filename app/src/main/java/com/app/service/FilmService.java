@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmService {
@@ -27,8 +28,11 @@ public class FilmService {
         film.setTitle(filmRequest.title());
         film.setDuration(filmRequest.duration() > 0 ? filmRequest.duration() : 0);
         film.setReleaseYear(filmRequest.releaseYear() > 0 ? filmRequest.releaseYear() : 0);
-        Category category = categoryService.get(filmRequest.category());
-        film.setCategory(category);
+        List<Category> categories = filmRequest.categories().stream()
+                .map(cat -> categoryService.get(cat))
+                .collect(Collectors.toList());
+
+        film.setCategories(categories);
         filmRepository.save(film);
         return film;
     }
@@ -38,8 +42,10 @@ public class FilmService {
         if (filmRequest.title() != null && !filmRequest.title().isBlank()) {
             film.setTitle(filmRequest.title());
         }
-        if (filmRequest.category() != null && !filmRequest.category().isBlank()) {
-            film.setCategory(categoryService.get(filmRequest.category()));
+        if (filmRequest.categories() != null && !filmRequest.categories().isEmpty()) {
+            film.setCategories( filmRequest.categories().stream()
+                    .map(cat -> categoryService.get(cat))
+                    .collect(Collectors.toList()));
         }
         if (filmRequest.duration() != null && filmRequest.duration() > 0) {
             film.setDuration(filmRequest.duration());

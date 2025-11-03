@@ -24,9 +24,6 @@ public class SecurityConfig {
             .headers(headers -> headers
                     .frameOptions(frameOptions -> frameOptions
                             .sameOrigin()))
-//            .formLogin(form -> form
-//                    .loginPage("/auth/login")
-//                    .permitAll())
             .csrf(csrf -> csrf.disable())
             .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests( auth -> auth

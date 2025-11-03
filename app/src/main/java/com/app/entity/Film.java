@@ -21,9 +21,7 @@ public class Film {
     private int releaseYear;
     private int duration;
 
-    @ManyToOne
-    private Category category;
-
-
+    @ManyToMany
+    private List<Category> categories;
 
 }

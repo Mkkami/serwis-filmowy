@@ -2,9 +2,11 @@ package com.app.entity.dto;
 
 import com.app.entity.Category;
 
+import java.util.List;
+
 public record CreateFilmRequest(
     String title,
-    String category,
     Integer duration,
-    Integer releaseYear
+    Integer releaseYear,
+    List<String> categories
 ) {}
