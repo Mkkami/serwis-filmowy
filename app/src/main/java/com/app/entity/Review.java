@@ -15,7 +15,6 @@ public class Review {
 
     private Integer rating;
     private String comment;
-//    private LocalDate date;
 
     @ManyToOne
     private User user;

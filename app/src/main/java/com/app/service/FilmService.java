@@ -80,7 +80,7 @@ public class FilmService {
     public void addReview(Long id, NewReviewRequest reviewRequest, String name) {
         Film film = filmRepository.findById(id).orElseThrow(() -> new FilmNotFoundException(id));
 
-        Review review = reviewService.createReview(reviewRequest, name);
+        Review review = reviewService.addReviewToFilm(film, reviewRequest, name);
 
         film.addReview(review);
         filmRepository.save(film);

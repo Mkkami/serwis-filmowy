@@ -22,15 +22,21 @@ public class ReviewController {
 
     @PostMapping("film/{id}/review")
     public ResponseEntity<?> reviewFilm(@PathVariable Long id, @RequestBody NewReviewRequest reviewRequest, Principal principal) {
-        filmService.addReview(id, reviewRequest, principal.getName());
-
+        try {
+            filmService.addReview(id, reviewRequest, principal.getName());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Review has been added");
     }
 
     @PostMapping("series/{id}/review")
     public ResponseEntity<?> reviewSeries(@PathVariable Long id, @RequestBody NewReviewRequest reviewRequest, Principal principal) {
-        seriesService.addReview(id, reviewRequest, principal.getName());
-
+        try {
+            seriesService.addReview(id, reviewRequest, principal.getName());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Review has been added");
     }
 }

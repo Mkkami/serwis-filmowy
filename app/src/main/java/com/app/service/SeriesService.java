@@ -78,7 +78,7 @@ public class SeriesService {
     public void addReview(Long id, NewReviewRequest reviewRequest, String name) {
         Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
 
-        Review review = reviewService.createReview(reviewRequest, name);
+        Review review = reviewService.addReviewToSeries(series, reviewRequest, name);
 
         series.addReview(review);
         seriesRepository.save(series);
