@@ -1,12 +1,15 @@
 package com.app.service;
 
 import com.app.entity.Category;
+import com.app.entity.Episode;
 import com.app.entity.Review;
 import com.app.entity.Series;
 import com.app.entity.dto.DtoMapper;
+import com.app.entity.dto.episode.NewEpisodeRequest;
 import com.app.entity.dto.review.NewReviewRequest;
 import com.app.entity.dto.series.CreateSeriesRequest;
 import com.app.entity.dto.series.FullSeriesRequest;
+import com.app.exception.EpisodeAlreadyExistsException;
 import com.app.exception.SeriesNotFoundException;
 import com.app.repository.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +81,30 @@ public class SeriesService {
         Review review = reviewService.createReview(reviewRequest, name);
 
         series.addReview(review);
+        seriesRepository.save(series);
+    }
+
+    public List<Episode> getAllEpisodes(Long id) {
+        Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
+
+        return series.getEpisodes();
+    }
+
+    public void addEpisode(Long id, NewEpisodeRequest episodeRequest) {
+        Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
+
+        if (series.hasEpisodeNumber(episodeRequest.episodeNumber())) {
+            throw new EpisodeAlreadyExistsException(episodeRequest.episodeNumber().toString());
+        }
+
+        Episode episode = new Episode();
+        episode.setEpisodeNumber(episodeRequest.episodeNumber());
+        episode.setSeries(series);
+        episode.setReleaseDate(episodeRequest.releaseDate());
+        episode.setTitle(episodeRequest.title());
+
+        series.addEpisode(episode);
+
         seriesRepository.save(series);
     }
 }

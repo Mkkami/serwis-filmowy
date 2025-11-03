@@ -23,10 +23,10 @@ public class Series {
     @ManyToMany
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "series")
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Episode> episodes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL) //add orphan removal for easier removal
     @JoinTable(
             name = "series_review_link",
             joinColumns = @JoinColumn(name = "series_id"),
@@ -44,5 +44,13 @@ public class Series {
 
     public Integer countRatings() {
         return reviews.size();
+    }
+
+    public void addEpisode(Episode episode) {
+        episodes.add(episode);
+    }
+
+    public boolean hasEpisodeNumber(Integer number) {
+        return episodes.stream().anyMatch(ep -> ep.getEpisodeNumber() == number);
     }
 }
