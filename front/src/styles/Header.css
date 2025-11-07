@@ -1,0 +1,21 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* position: fixed; */
+    top: 0;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    width: 80%;
+}
+
+.profile {
+    flex-shrink: 0;
+}
