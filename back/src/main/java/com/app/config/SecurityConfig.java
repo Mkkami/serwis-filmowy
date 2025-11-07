@@ -2,11 +2,13 @@ package com.app.config;
 
 import com.app.config.security.CustomFilter;
 import com.app.service.CustomUserDetailsService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,23 +28,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .headers(headers -> headers
-                    .frameOptions(frameOptions -> frameOptions
-                            .sameOrigin()))
             .csrf(csrf -> csrf.disable())
-            .cors(Customizer.withDefaults())
-            .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
-            .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .permitAll()
-            )
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests( auth -> auth
-                    .requestMatchers("/auth/register", "/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
-                    .anyRequest().authenticated())
-            .userDetailsService(userDetailsService)
-            .httpBasic(Customizer.withDefaults());
+                .requestMatchers("/register", "/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
+                .anyRequest().authenticated())
+            .formLogin(form -> form
+                .loginProcessingUrl("/login")
+                .successHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))
+                .failureHandler((req, res, ex) ->res.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                .permitAll())
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID"))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .sessionFixation(sessionFixation -> sessionFixation.migrateSession()))
+            .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
+            .userDetailsService(userDetailsService);
         return http.build();
     }
 

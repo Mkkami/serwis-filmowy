@@ -1,15 +1,17 @@
-import {useState} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import "../styles/Header.css"
+import { useAuth } from './AuthProvider';
+import { logout } from '../api/auth';
 
-function Header({ isLoggedIn, onLogout }) {
+function Header() {
     const navigate = useNavigate();
+    const {isLoggedIn, setIsLoggedIn} = useAuth();
 
-
-  const handleLogout = async () => {
-    await onLogout();
-    navigate("/");
-  }
+    const handleLogout = async () => {
+        await logout();
+        setIsLoggedIn(false);
+        navigate("/");
+    }
 
     return (
         <header className='header'>
