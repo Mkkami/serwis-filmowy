@@ -12,6 +12,8 @@ import com.app.exception.FilmNotFoundException;
 import com.app.repository.FilmRepository;
 import com.app.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +39,14 @@ public class FilmService {
 
         return DtoMapper.filmToFullDto(film);
     }
+
+//    public Page<FilmRequest> searchFilms(
+//            String title,
+//            List<Long> categoryId,
+//            Pageable pageable
+//    ) {
+//        return filmRepository.searchFilmsWithStats(title, categoryId, pageable);
+//    }
 
     public Film createFilm(CreateFilmRequest filmRequest) {
         Film film = new Film();

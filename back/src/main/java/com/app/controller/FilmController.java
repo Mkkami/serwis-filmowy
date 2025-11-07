@@ -2,11 +2,16 @@ package com.app.controller;
 
 import com.app.entity.Film;
 import com.app.entity.dto.film.CreateFilmRequest;
+import com.app.entity.dto.film.FilmRequest;
 import com.app.entity.dto.film.FullFilmRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.service.FilmService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,4 +57,22 @@ public class FilmController {
         }
         return ResponseEntity.ok().body(updatedFilm);
     }
+
+//    @GetMapping("film/search")
+//    public ResponseEntity<Page<FilmRequest>> search(
+//            @RequestParam(defaultValue = "") String title,
+//            @RequestParam(required = false) List<Long> categories,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "title") String sortBy,
+//            @RequestParam(defaultValue = "asc") String direction
+//    ) {
+//        int pageSize = 20;
+//
+//        Sort sort = direction.equalsIgnoreCase("desc")
+//                ? Sort.by(sortBy).descending()
+//                : Sort.by(sortBy).ascending();
+//
+//        Pageable pageable = PageRequest.of(page, pageSize, sort);
+//        return ResponseEntity.ok().body(filmService.searchFilms(title, categories, pageable));
+//    }
 }

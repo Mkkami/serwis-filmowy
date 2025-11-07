@@ -32,15 +32,32 @@ public class Film {
     )
     private List<Review> reviews;
 
+    private Double averageRating = 0.0;
+    private Integer reviewCount = 0;
+
     public void addReview(Review review) {
         reviews.add(review);
+        recalculateReviews();
     }
 
-    public Float averageRating() {
-        return ((float) reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
+    public Double averageRating() {
+        return ( reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
     }
 
     public Integer countRatings() {
         return reviews.size();
+    }
+
+    public void recalculateReviews() {
+        if (reviews.isEmpty()) {
+            averageRating = 0.0;
+            reviewCount = 0;
+        } else {
+            averageRating = reviews.stream()
+                    .mapToInt(Review::getRating)
+                    .average()
+                    .orElse(0.0);
+            reviewCount = reviews.size();
+        }
     }
 }
