@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import '../styles/LoginForm.css'
 import { login } from "../api/auth";
 import { useState } from "react";
 import AuthForm from "../components/AuthForm";
@@ -30,15 +29,15 @@ function Login() {
     }
 
     return (
-    <>
+    <div className="form">
         <h1>Login</h1>
         <AuthForm onSubmit={handleSubmit} onValidate={handleValidate} action={"Login"}/>
-        <p>{error}</p>
+        <p className="error">{error}</p>
         <p>No account? 
-            <Link to="/register">
-             Register</Link>
+        <br></br>
+        <Link to="/register"> Register</Link>
         </p>
-    </>
+    </div>
     )
 }
 export default Login;

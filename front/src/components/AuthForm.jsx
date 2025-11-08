@@ -1,5 +1,6 @@
 import { useReducer } from "react"
 import { loginFormReducer, initialState, formActions } from "./LoginFormReducer"
+import "../styles/AuthForm.css"
 
 function AuthForm({onValidate, onSubmit, action}) {
     const [state, dispatch] = useReducer(loginFormReducer, initialState)
@@ -31,12 +32,12 @@ function AuthForm({onValidate, onSubmit, action}) {
             <div>
                 <label htmlFor="username">Username:</label>
                 <input type="text" name="username" value={state.values["username"]} onChange={handleChange} />
-                {state.errors["username"] && <p>{state.errors["username"]}</p>}
+                {state.errors["username"] && <p className="error">{state.errors["username"]}</p>}
             </div>
             <div>
                 <label htmlFor="password">Password:</label>
                 <input type="password" name="password" value={state.values["password"]} onChange={handleChange} />
-                {state.errors["password"] && <p>{state.errors["password"]}</p>}
+                {state.errors["password"] && <p className="error">{state.errors["password"]}</p>}
             </div>
             <button type="submit">{action}</button>
         </form>
