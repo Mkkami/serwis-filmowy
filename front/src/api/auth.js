@@ -19,3 +19,16 @@ export const login = async (username, password) => {
         credentials: "include",
     })
 }
+
+export const register = async (username, password) => {
+    return await fetch("http://localhost:8080/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password,
+        }),
+    })
+}
