@@ -19,12 +19,12 @@ function Header() {
 
     return (
         <header className='header'>
-            <Link to='/'>
+            <Link to='/' className='logo'>
                 FilmBase
             </Link>
 
             <nav>
-                <input placeholder='Search'></input>
+                <input className='search-bar' placeholder='Search'></input>
                 {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add title</button>}
             </nav>
 

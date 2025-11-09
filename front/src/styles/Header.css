@@ -4,6 +4,15 @@
     width: 100%;
     /* position: fixed; */
     top: 0;
+    padding: 1em 0;
+    height: 3em;
+    align-items: center;
+
+    border-bottom: 2px solid var(--purple-subtle);
+}
+
+.logo {
+    font-size: 2em;
 }
 
 nav {
@@ -12,6 +21,18 @@ nav {
     justify-content: center;
 }
 
+.search-bar {
+    flex: 1;
+    max-width: 80%;
+    padding: 0.5rem;
+}
+
 .profile {
     flex-shrink: 0;
+}
+
+@media (width <= 450px) {
+    .logo {
+        font-size: 1em;
+    }
 }
