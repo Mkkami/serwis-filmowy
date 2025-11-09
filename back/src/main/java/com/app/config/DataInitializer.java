@@ -6,12 +6,17 @@ import com.app.entity.dto.UserLoginRequest;
 import com.app.repository.CategoryRepository;
 import com.app.repository.UserRepository;
 import com.app.service.UserService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+
+import java.io.File;
+import java.util.List;
 
 @Component
 public class DataInitializer {
@@ -26,10 +31,14 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        createCategoryIfNotExists("action");
-        createCategoryIfNotExists("scifi");
-        createCategoryIfNotExists("fantasy");
-        createCategoryIfNotExists("comedy");
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<String> genres = mapper.readValue(new File("src/main/resources/genres.json"), new TypeReference<List<String>>() {
+            });
+            genres.forEach(this::createCategoryIfNotExists);
+        }catch(Exception e){
+
+        }
     }
 
     @PostConstruct

@@ -4,6 +4,7 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddMovie from "../pages/AddMovie";
+import AddSeries from "../pages/AddSeries";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/add/series",
+            element: <AddSeries/>
         },
         ],
     },

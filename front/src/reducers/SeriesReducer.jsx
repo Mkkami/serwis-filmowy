@@ -15,7 +15,7 @@ export const seriesInitialState = {
     }
 }
 
-export function movieReducer(state, action) {
+export function seriesReducer(state, action) {
     if (action.type === formActions.reset) {
         return seriesInitialState;
     }

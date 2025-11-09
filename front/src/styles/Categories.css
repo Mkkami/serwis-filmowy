@@ -1,5 +1,5 @@
 .categories {
-    height: 200px;
+    max-height: 200px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1em;
@@ -7,6 +7,12 @@
     scrollbar-width: thin;
     scrollbar-color: var(--purple) transparent;
     padding-right: 0.5em;
+}
+
+@media (width <= 750px) {
+    .categories {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .categories-container {

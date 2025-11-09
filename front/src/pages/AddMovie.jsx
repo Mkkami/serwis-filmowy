@@ -4,7 +4,6 @@ import { formActions } from "../reducers/FormReducer";
 import Categories from "../components/Categories";
 
 function AddMovie() {
-    const [categoriesOpen, setCategoriesOpen] = useState(false);
     const [state, dispatch] = useReducer(movieReducer, movieInitialState);
 
     const handleChange = (e) => {

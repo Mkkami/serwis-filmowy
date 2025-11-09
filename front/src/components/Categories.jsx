@@ -36,41 +36,10 @@ function Categories() {
                 {isLoading ? <p>Loading...</p>
             :
                 categories.map((cat) =>
-                    <>
                     <label key={cat.id} htmlFor={`cat-${cat.id}`}>
                         <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
                         {cat.name}
                     </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
-                        {cat.name}
-                    </label>
-                    </>
-            
                 )}
             </div>
         </div>
