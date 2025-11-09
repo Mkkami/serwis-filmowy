@@ -2,16 +2,20 @@ import {useNavigate, Link} from 'react-router-dom'
 import "../styles/Header.css"
 import { useAuth } from './AuthProvider';
 import { logout } from '../api/auth';
+import { useState } from 'react';
+import SelectAdd from './SelectAdd';
 
 function Header() {
     const navigate = useNavigate();
     const {isLoggedIn, setIsLoggedIn} = useAuth();
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
     const handleLogout = async () => {
         await logout();
         setIsLoggedIn(false);
         navigate("/");
     }
+
 
     return (
         <header className='header'>
@@ -21,7 +25,7 @@ function Header() {
 
             <nav>
                 <input placeholder='Search'></input>
-                {isLoggedIn && <Link to="/add">Add title</Link>}
+                {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add title</button>}
             </nav>
 
             <div className='profile'>
@@ -34,6 +38,7 @@ function Header() {
                 </>
             }
             </div>
+            {isDialogOpen && <SelectAdd handleClose={() => setDialogOpen(false)}/>}
         </header>
     )
 }

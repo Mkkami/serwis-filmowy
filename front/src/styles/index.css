@@ -14,8 +14,11 @@
   --bg-second: hsl(0,0%, 10%);
   --bg-highlight: hsl(0,0%, 20%);
 
+  
+
   --text-heading: hsl(0,0%, 90%);
   --text: hsl(0,0%, 80%);
+  --text-second: hsl(0, 0%, 50%);
 }
 
 a {

@@ -1,9 +1,9 @@
 import { useReducer } from "react"
-import { loginFormReducer, initialState, formActions } from "./LoginFormReducer"
-import "../styles/AuthForm.css"
+import { loginFormReducer, initialState } from "../reducers/LoginFormReducer"
+import { formActions } from "../reducers/FormReducer"
 
 function AuthForm({onValidate, onSubmit, action}) {
-    const [state, dispatch] = useReducer(loginFormReducer, initialState)
+    const [state, dispatch] = useReducer(loginFormReducer, initialState )
 
     const handleChange = (e) => {
         dispatch({

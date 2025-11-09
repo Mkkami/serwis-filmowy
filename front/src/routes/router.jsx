@@ -3,6 +3,7 @@ import App from "../App";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import AddMovie from "../pages/AddMovie";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/add/movie",
+            element: <AddMovie/>
         },
         {
             path: "/add/series",

@@ -1,0 +1,34 @@
+dialog {
+    position: fixed;
+    top: 50%;
+    bottom: 50%;
+    padding: 0;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+}
+
+dialog > div {
+    margin: 1em;
+}
+
+dialog > div button {
+    margin: 1em;
+}
+
+dialog::backdrop {
+    background-color: red;
+}
+
+.close-btn {
+    flex: 0;
+    color: var(--text-second);
+    background-color: transparent;
+    border: none;
+}
+
+.close-btn:hover {
+    color: var(--text-heading);
+}
