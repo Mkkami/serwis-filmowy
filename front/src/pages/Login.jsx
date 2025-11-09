@@ -29,7 +29,7 @@ function Login() {
     }
 
     return (
-    <div className="form">
+    <div className="auth-form form">
         <h1>Login</h1>
         <AuthForm onSubmit={handleSubmit} onValidate={handleValidate} action={"Login"}/>
         <p className="error">{error}</p>

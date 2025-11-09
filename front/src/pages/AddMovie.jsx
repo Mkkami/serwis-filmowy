@@ -2,7 +2,6 @@ import { useReducer, useState } from "react";
 import { movieInitialState, movieReducer } from "../reducers/MovieReducer";
 import { formActions } from "../reducers/FormReducer";
 import Categories from "../components/Categories";
-import '../styles/MovieForm.css'
 
 function AddMovie() {
     const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -23,18 +22,19 @@ function AddMovie() {
     }
 
     return (
-        <div className="form">
+        <div className="movie-form form">
+            <h2>Add new movie</h2>
             <form>
                 <div className="form-container">
-                    <div>
+                    <div className="input-container">
                         <label htmlFor="title">Title</label>
                         <input placeholder="title" name="title" onChange={handleChange} type="text"></input>
                     </div>
-                    <div>
+                    <div className="input-container">
                         <label htmlFor="duration">Duration</label>
                         <input placeholder="minutes" name="duration" onChange={handleChange} type="number"></input>
                     </div>
-                    <div>
+                    <div className="input-container">
                         <label htmlFor="releaseYear">Release Year</label>
                         <input placeholder="year" name="releaseYear" onChange={handleChange} type="number"></input>
                     </div>

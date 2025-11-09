@@ -1,11 +1,46 @@
 .categories {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    height: 200px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1em;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple) transparent;
+    padding-right: 0.5em;
+}
+
+.categories-container {
+    position: relative;
+}
+
+.categories-container::after,
+.categories-container::before {
+    content: "";
+    height: 1em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+.fade-bottom::after {
+    bottom: 0;
+    background-image:
+        linear-gradient(to top, var(--purple-subtle), transparent);
+}
+
+.fade-top::before {
+    top: 0;
+    background-image:
+        linear-gradient(to bottom, var(--purple-subtle), transparent);
+}
+
+.categories label {
+    margin: 0;
+    text-align: left;
 }
 
 input {
     width: fit-content;
-    margin: 0 1em;
+    margin: 0 0.5rem;
 }

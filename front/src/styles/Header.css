@@ -12,10 +12,6 @@ nav {
     justify-content: center;
 }
 
-input {
-    width: 80%;
-}
-
 .profile {
     flex-shrink: 0;
 }

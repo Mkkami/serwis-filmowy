@@ -14,11 +14,16 @@
   --bg-second: hsl(0,0%, 10%);
   --bg-highlight: hsl(0,0%, 20%);
 
-  
+  --purple: hsl(270, 80%, 65%);
+  --purple-subtle: hsl(270, 40%, 20%);
+
+  --teal: hsl(175, 80%, 55%);
 
   --text-heading: hsl(0,0%, 90%);
   --text: hsl(0,0%, 80%);
   --text-second: hsl(0, 0%, 50%);
+
+  --error: hsl(0, 70%, 55%);
 }
 
 a {
@@ -59,6 +64,14 @@ button:focus-visible {
 body {
   background-color: var(--bg);
   color: var(--text-heading);
+}
+
+label, p {
+  margin: 1em;
+}
+
+input {
+  font-size: 1.125rem;
 }
 
 /* @media (prefers-color-scheme: light) {

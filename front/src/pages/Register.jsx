@@ -37,7 +37,7 @@ function Register() {
     }
 
     return (
-    <div className="form">
+    <div className="auth-form form">
         <h1>Register</h1>
         <AuthForm onSubmit={handleSubmit} onValidate={handleValidate} action="Register" />
         <p className="error">{error}</p>

@@ -10,4 +10,14 @@ form > *{
     border: 2px solid black;
     border-radius: 8px;
     background-color: var(--bg-second);
+    padding: 1rem;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-form form {
+    display: flex;
 }
