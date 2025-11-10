@@ -24,3 +24,19 @@ export const addNewFilm = async (title, duration, releaseYear, categories) => {
         credentials: "include"
     })
 }
+
+export const addNewSeries = async (title, releaseYear, endYear, categories) => {
+    return await fetch("http://localhost:8080/series", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            title: title,
+            releaseYear: releaseYear,
+            endYear: endYear,
+            categories: categories
+        }),
+        credentials: "include"
+    })
+}

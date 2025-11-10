@@ -49,7 +49,7 @@ function AddMovie() {
         const errors = {}
         if (!values.title) errors.title = "Title missing";
         if (!values.duration || values.duration <= 0) errors.duration = "Duration must be longer than 0 minutes";
-        if (!values.duration || values.releaseYear <= 0) errors.releaseYear = "Release year missing";
+        if (!values.releaseYear || values.releaseYear <= 0) errors.releaseYear = "Release year missing";
         Object.keys(values).forEach(field => {
             if (!errors[field]) {
                 dispatch({
