@@ -47,3 +47,10 @@ export const getFilm = async (id) => {
         credentials: "include"
     })
 }
+
+export const getSeries = async (id) => {
+    return await fetch(`http://localhost:8080/series/${id}`, {
+        method: "GET",
+        credentials: "include"
+    })
+}

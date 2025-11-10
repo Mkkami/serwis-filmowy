@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import MovieForm from "../pages/MovieForm";
 import SeriesForm from "../pages/SeriesForm";
 import Movie from "../pages/Movie";
+import Series from "../pages/Series";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/series/:id",
+            element: <Series />
         },
         {
             path: "/add",

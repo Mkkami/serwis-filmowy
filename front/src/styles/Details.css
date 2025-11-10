@@ -3,6 +3,13 @@
     background-color: var(--bg-second);
     flex-basis: 100%;
     align-self: stretch;
+    padding: 0 2em;
+}
+
+@media (width <= 500px) {
+    .info {
+        padding: 0;
+    }
 }
 
 main {
