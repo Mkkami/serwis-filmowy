@@ -32,3 +32,10 @@ export const register = async (username, password) => {
         }),
     })
 }
+
+export const checkLoginStatus = async() => {
+    return await fetch("http://localhost:8080/me", {
+        method:"GET",
+        credentials: "include"
+    })
+}

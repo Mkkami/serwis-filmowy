@@ -43,8 +43,13 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID"))
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                         .sessionFixation(sessionFixation -> sessionFixation.migrateSession()))
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) ->
+                                // Set the response status to 401 Unauthorized for unauthenticated access
+                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)))
+
             .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
             .userDetailsService(userDetailsService);
         return http.build();
