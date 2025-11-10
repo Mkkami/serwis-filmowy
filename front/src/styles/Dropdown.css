@@ -9,10 +9,8 @@
     background-color: var(--bg-second);
     text-align: center;
     color: var(--text);
-    z-index: 2;
     left: 0;
     right: 5px;
-    /* border: 1px solid var(--purple-subtle) */
 }
 
 .dropdown-menu li {

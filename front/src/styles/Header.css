@@ -13,7 +13,16 @@
 
 .logo {
     font-size: 2em;
+    font-weight: bold;
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(
+        to right, 
+        var(--orange), 
+        var(--purple)      
+    );
 }
+
 
 nav {
     flex: 1;
