@@ -4,6 +4,7 @@ import { useAuth } from './AuthProvider';
 import { logout } from '../api/auth';
 import { useState } from 'react';
 import SelectAdd from './SelectAdd';
+import ProfileDropdown from './ProfileDropdown';
 
 function Header() {
     const navigate = useNavigate();
@@ -32,10 +33,7 @@ function Header() {
                 {!isLoggedIn ?
                 <Link to="/login">Login</Link>
                 :
-                <>
-                    <Link to="/profile">Profile</Link>
-                    <button onClick={handleLogout} className='logout'>Logout</button>
-                </>
+                <ProfileDropdown handleLogout={handleLogout}/>
             }
             </div>
             {isDialogOpen && <SelectAdd handleClose={() => setDialogOpen(false)}/>}

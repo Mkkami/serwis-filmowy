@@ -1,0 +1,38 @@
+.dropdown-container {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-second);
+    text-align: center;
+    color: var(--text);
+    z-index: 2;
+    left: 0;
+    right: 5px;
+    /* border: 1px solid var(--purple-subtle) */
+}
+
+.dropdown-menu li {
+    list-style: none;
+    border: 2px solid var(--purple-subtle);
+}
+
+.dropdown-menu li:hover {
+    border: 2px solid var(--purple);
+    background-color: var(--bg-highlight);
+}
+
+.dropdown-menu button {
+    background-color: inherit;
+    border: none;
+    color: inherit;
+    padding: 0;
+}
+
+.dropdown-menu a {
+    color: inherit;
+
+}
