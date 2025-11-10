@@ -26,7 +26,7 @@ function Header() {
 
             <nav>
                 <input className='search-bar' placeholder='Search'></input>
-                {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add title</button>}
+                {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add</button>}
             </nav>
 
             <div className='profile'>
