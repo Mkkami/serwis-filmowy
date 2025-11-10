@@ -1,0 +1,43 @@
+.info {
+    text-align: left;
+    background-color: var(--bg-second);
+    flex-basis: 100%;
+    align-self: stretch;
+}
+
+main {
+    margin: 0;
+
+}
+
+h1 {
+    text-align: center;
+}
+
+.reviews {
+    border-top: 2px solid var(--bg-highlight);
+}
+
+.review-card {
+    margin: 1em;
+    display: flex;
+    border-bottom: 1px solid var(--purple);
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100px;
+}
+
+.username {
+    margin: 0;
+    color: var(--text-second)
+}
+
+.comment {
+    margin-top: 0;
+    margin-left: 0;
+    min-height: 2ch;
+}

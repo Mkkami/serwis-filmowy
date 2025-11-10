@@ -4,7 +4,7 @@ import Categories from "../components/Categories";
 import { seriesInitialState, seriesReducer } from "../reducers/SeriesReducer";
 import { addNewSeries } from "../api/api";
 
-function AddSeries() {
+function SeriesForm() {
     const [state, dispatch] = useReducer(seriesReducer, seriesInitialState);
     const [message, setMessage] = useState("");
 
@@ -100,4 +100,4 @@ function AddSeries() {
         </div>
     )
 }
-export default AddSeries;
+export default SeriesForm;

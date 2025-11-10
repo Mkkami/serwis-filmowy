@@ -3,8 +3,9 @@ import App from "../App";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import AddMovie from "../pages/AddMovie";
-import AddSeries from "../pages/AddSeries";
+import MovieForm from "../pages/MovieForm";
+import SeriesForm from "../pages/SeriesForm";
+import Movie from "../pages/Movie";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/movie/:id",
+            element: <Movie />
         },
         {
             path: "/series/:id",
@@ -33,11 +35,11 @@ const router = createBrowserRouter([
         },
         {
             path: "/add/movie",
-            element: <AddMovie/>
+            element: <MovieForm/>
         },
         {
             path: "/add/series",
-            element: <AddSeries/>
+            element: <SeriesForm/>
         },
         ],
     },

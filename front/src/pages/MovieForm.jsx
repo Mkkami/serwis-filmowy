@@ -4,7 +4,7 @@ import { formActions } from "../reducers/FormReducer";
 import Categories from "../components/Categories";
 import { addNewFilm } from "../api/api";
 
-function AddMovie() {
+function MovieForm() {
     const [state, dispatch] = useReducer(movieReducer, movieInitialState);
     const [message, setMessage] = useState("");
 
@@ -101,4 +101,4 @@ function AddMovie() {
         </div>
     )
 }
-export default AddMovie;
+export default MovieForm;

@@ -11,9 +11,7 @@
 
 main {
   flex: 1;
-  max-width: 1280px;
   text-align: center;
-  margin: 0 auto;
 
   display: flex;
   flex-direction: column;

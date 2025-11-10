@@ -40,3 +40,10 @@ export const addNewSeries = async (title, releaseYear, endYear, categories) => {
         credentials: "include"
     })
 }
+
+export const getFilm = async (id) => {
+    return await fetch(`http://localhost:8080/film/${id}`, {
+        method: "GET",
+        credentials: "include"
+    })
+}
