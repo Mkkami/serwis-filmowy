@@ -5,13 +5,13 @@ export const movieInitialState = {
         title: "",
         duration: 0,
         releaseYear: 0,
-        categories: []
+        categories: new Set()
     },
     errors: {
         title: "",
         duration: "",
         releaseYear: "",
-        categories: []
+        categories: new Set()
     }
 }
 

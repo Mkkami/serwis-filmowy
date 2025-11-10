@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCategories } from "../api/api";
 import "../styles/Categories.css"
 
-function Categories() {
+function Categories({selectedCategories, setSelectedCategories}) {
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState([]);
     const scrollRef = useRef(null);
@@ -30,6 +30,18 @@ function Categories() {
         fetchCategories();
     }, []);
 
+    const handleCategorySelect = (name, isChecked) => {
+        const newSet = new Set(selectedCategories);
+
+        if (isChecked) {
+            newSet.add(name);
+        } else {
+            newSet.delete(name);
+        }
+
+        setSelectedCategories(newSet);
+    }
+
     return (
         <div className={`categories-container ${fadeTop ? "fade-top" : ""} ${fadeBottom ? "fade-bottom" : ""}`}>
             <div className="categories" ref={scrollRef} onScroll={updateScrollFade}>
@@ -37,7 +49,12 @@ function Categories() {
             :
                 categories.map((cat) =>
                     <label key={cat.id} htmlFor={`cat-${cat.id}`}>
-                        <input id={`cat-${cat.id}`} type="checkbox" name={cat.name} />
+                        <input id={`cat-${cat.id}`} 
+                            type="checkbox" 
+                            name={cat.name} 
+                            onChange={(e) => handleCategorySelect(cat.name, e.target.checked)}
+                            // checked={selectedCategories.has(cat.name)}
+                            />
                         {cat.name}
                     </label>
                 )}

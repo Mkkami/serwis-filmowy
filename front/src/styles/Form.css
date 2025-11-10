@@ -13,11 +13,22 @@ form > *{
     padding: 1rem;
 }
 
+@media (width <= 500px) {
+    .form {
+        padding: 0;
+    }
+
+    .form-container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 .input-container {
     display: flex;
     flex-direction: column;
 }
 
-.movie-form form {
+.main-content {
     display: flex;
 }
