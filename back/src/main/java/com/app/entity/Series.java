@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Entity
 @NoArgsConstructor
@@ -34,9 +35,8 @@ public class Series {
     )
     private List<Review> reviews;
 
-    public void addReview(Review review) {
-        reviews.add(review);
-    }
+    private Double averageRating = 0.0;
+    private Integer reviewCount = 0;
 
     public Float averageRating() {
         return ((float) reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
@@ -52,5 +52,24 @@ public class Series {
 
     public boolean hasEpisodeNumber(Integer number) {
         return episodes.stream().anyMatch(ep -> ep.getEpisodeNumber() == number);
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+        recalculareReviews();
+    }
+
+    private void recalculareReviews() {
+        if (reviews.isEmpty()) {
+            averageRating = 0.0;
+            reviewCount = 0;
+        } else {
+            OptionalDouble avg = reviews.stream()
+                    .mapToInt(Review::getRating)
+                    .average();
+
+            averageRating = avg.orElse(0.0);
+            reviewCount = reviews.size();
+        }
     }
 }

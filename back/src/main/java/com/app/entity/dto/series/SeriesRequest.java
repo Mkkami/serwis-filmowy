@@ -10,7 +10,7 @@ public record SeriesRequest(
         Integer releaseYear,
         Integer endYear,
         List<Category> categories,
-        Float averageRating,
-        Integer numberOfReviews
+        Double averageRating,
+        Integer reviewCount
 ) {
 }

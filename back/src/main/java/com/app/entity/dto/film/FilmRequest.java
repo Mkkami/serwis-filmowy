@@ -6,6 +6,6 @@ public record FilmRequest(
         String title,
         Integer releaseYear,
         Double averageRating,
-        Long numberOfReviews
+        Integer reviewCount
 ) {
 }
