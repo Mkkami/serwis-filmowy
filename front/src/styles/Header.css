@@ -30,11 +30,37 @@ nav {
     justify-content: center;
 }
 
+.form-search-bar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .search-bar {
     flex: 1;
-    max-width: 50%;
     padding: 0.5rem;
-    width: 0;
+    max-width: 50%;
+    margin: 0;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid transparent;
+}
+
+.search-bar:focus {
+    border: 1px solid var(--purple);
+    outline: none;
+}
+
+.form-search-bar button {
+    margin: 0;
+    border-radius: 0 8px 8px 0;
+    border: 1px solid transparent;
+    background-color: var(--bg-highlight);
+}
+
+.form-search-bar button:hover {
+    background-color: var(--bg-highlight);
+    border: 1px solid var(--purple);
 }
 
 .profile {

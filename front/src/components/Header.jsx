@@ -5,6 +5,7 @@ import { logout } from '../api/auth';
 import { useState } from 'react';
 import SelectAdd from './SelectAdd';
 import ProfileDropdown from './ProfileDropdown';
+import Search from './Search';
 
 function Header() {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ function Header() {
             </Link>
 
             <nav>
-                <input className='search-bar' placeholder='Search'></input>
+                <Search/>
                 {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add</button>}
             </nav>
 
