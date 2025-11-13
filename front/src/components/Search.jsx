@@ -1,21 +1,42 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+const params = {
+    title: "",
+    categoryIds: [],
+    page: 0,
+    sortBy: "title",
+    sortDirection: "asc"
+}
 
 function Search() {
-    const [title, setTitle] = useState("");
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    const initialQuery = searchParams.get('title') || '';
+    const [title, setTitle] = useState(initialQuery);
 
     useEffect(() => {
-        console.log(title);
-    }, [title])
+        setTitle(searchParams.get('title') || '');
+    }, [searchParams])
 
     const handleInput = (e) => {
         setTitle(e.target.value);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (title.trim()) {
+            navigate(`/search?title=${encodeURIComponent(title.trim())}`)
+        } else {
+            navigate('/search')
+        }
+    }
+
     return (
         <>
-
-            <form action="" className="form-search-bar">
-                <input className='search-bar' placeholder='Search' onInput={handleInput}></input>
+            <form className="form-search-bar" onSubmit={handleSubmit}>
+                <input className='search-bar' placeholder='Search' onChange={handleInput}></input>
                 <button type="submit">s</button>
             </form>
         </>

@@ -54,3 +54,8 @@ export const getSeries = async (id) => {
         credentials: "include"
     })
 }
+
+export const search = async (url) => {
+    return await fetch(`http://localhost:8080/search?${url}`, {
+    });
+}

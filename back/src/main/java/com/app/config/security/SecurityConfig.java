@@ -1,12 +1,10 @@
-package com.app.config;
+package com.app.config.security;
 
-import com.app.config.security.CustomFilter;
 import com.app.service.CustomUserDetailsService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +29,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests( auth -> auth
-                .requestMatchers("/search","/register", "/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
+                .requestMatchers("/search**", "/register", "/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginProcessingUrl("/login")
@@ -66,6 +64,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:5173")); // frontend dev
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

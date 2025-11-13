@@ -20,14 +20,14 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<MediaRequest>> search(
-            @RequestParam(required = false) String titleSearchTerm,
+            @RequestParam(required = false) String title,
             @RequestParam(required = false)List<Long> categoryIds,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDirection
             ) {
         SearchCriteria criteria = new SearchCriteria(
-                titleSearchTerm,
+                title,
                 categoryIds,
                 page,
                 sortBy,

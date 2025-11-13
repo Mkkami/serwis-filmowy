@@ -7,6 +7,7 @@ import MovieForm from "../pages/MovieForm";
 import SeriesForm from "../pages/SeriesForm";
 import Movie from "../pages/Movie";
 import Series from "../pages/Series";
+import SearchResult from "../pages/SearchResult"
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
         },
         {
             path: "/search",
+            element: <SearchResult />
         },
         {
             path: "/movie/:id",
