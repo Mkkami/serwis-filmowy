@@ -77,20 +77,32 @@ function MediaList() {
         updateSearch({sortBy: newSortBy, sortDirection: newDirection, page: 0})
     }
 
+    const sortDisplay = (el) => {
+        if (el == searchParams.get('sortBy')) {
+            if (searchParams.get('sortDirection') === "asc") {
+                return <>&#9660;</>;
+            } else {
+                return <>&#9650;</>;
+            }
+            
+        }
+        return <>&#9660;</>;
+    }
+
 
     return (
         <div>
             <div className="sort">
-                <button onClick={() => updateSort('title')}>Title</button>
-                <button onClick={() => updateSort('averageRating')}>Score</button>
-                <button onClick={() => updateSort('ratingCount')}>review number</button>
-                <button onClick={() => updateSort('releaseYear')}>year</button>
+                <button onClick={() => updateSort('title')}>{sortDisplay('title')}Title</button>
+                <button onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')}Score</button>
+                <button onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')}review number</button>
+                <button onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')}year</button>
                 
             </div>
             <Categories style={{innerHeight: "1000px"}} selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
             <div className="results">
                 {results.map(res => 
-                    <div className="media-card">
+                    <div key={res.id} className="media-card">
                         <h3>{res.title}</h3>
                         <p>{res.mediaType}</p>
                         <p>{res.releaseYear}</p>

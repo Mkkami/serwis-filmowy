@@ -25,7 +25,7 @@ public class SearchService {
 
     private final FilmRepository filmRepository;
     private final SeriesRepository seriesRepository;
-    private static final int PAGE_SIZE = 1;
+    private static final int PAGE_SIZE = 3;
 
     public Page<MediaRequest> search(SearchCriteria criteria) {
         Specification<Film> filmSpec = new MediaSpecification<>(criteria);
