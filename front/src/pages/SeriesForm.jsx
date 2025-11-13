@@ -33,7 +33,7 @@ function SeriesForm() {
             state.values.title,
             state.values.releaseYear,
             state.values.endYear,
-            Array.from(state.values.categories));
+            Array.from(state.values.categories).map(c => c.name));
 
         if (res.ok) {
             setMessage("Series added");

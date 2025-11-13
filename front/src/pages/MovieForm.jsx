@@ -33,7 +33,7 @@ function MovieForm() {
             state.values.title,
             state.values.duration,
             state.values.releaseYear,
-            Array.from(state.values.categories));
+            Array.from(state.values.categories).map(c => c.name));
 
         if (res.ok) {
             setMessage("Movie added");

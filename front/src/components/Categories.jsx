@@ -23,23 +23,23 @@ function Categories({selectedCategories, setSelectedCategories}) {
         const fetchCategories = async () => {
             const res = await getCategories();
             const data = await res.json();
-            console.log(data);
             setCategories(data);
             setIsLoading(false);
         }
         fetchCategories();
     }, []);
 
-    const handleCategorySelect = (name, isChecked) => {
+    const handleCategorySelect = (cat, isChecked) => {
         const newSet = new Set(selectedCategories);
 
         if (isChecked) {
-            newSet.add(name);
+            newSet.add(cat);
         } else {
-            newSet.delete(name);
+            newSet.delete(cat);
         }
 
         setSelectedCategories(newSet);
+        console.log(Array.from(newSet));
     }
 
     return (
@@ -52,7 +52,7 @@ function Categories({selectedCategories, setSelectedCategories}) {
                         <input id={`cat-${cat.id}`} 
                             type="checkbox" 
                             name={cat.name} 
-                            onChange={(e) => handleCategorySelect(cat.name, e.target.checked)}
+                            onChange={(e) => handleCategorySelect(cat, e.target.checked)}
                             // checked={selectedCategories.has(cat.name)}
                             />
                         {cat.name}
