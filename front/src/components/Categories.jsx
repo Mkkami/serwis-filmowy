@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { getCategories } from "../api/api";
 import "../styles/Categories.css"
 
-function Categories({selectedCategories, setSelectedCategories}) {
+function Categories({selectedCategories, setSelectedCategories, heightLimit=false}) {
     const [isLoading, setIsLoading] = useState(true);
     const [categories, setCategories] = useState([]);
     const scrollRef = useRef(null);
@@ -43,8 +43,8 @@ function Categories({selectedCategories, setSelectedCategories}) {
     }
 
     return (
-        <div className={`categories-container ${fadeTop ? "fade-top" : ""} ${fadeBottom ? "fade-bottom" : ""}`}>
-            <div className="categories" ref={scrollRef} onScroll={updateScrollFade}>
+        <div className={`categories-container ${fadeTop && heightLimit ? "fade-top" : ""} ${fadeBottom && heightLimit ? "fade-bottom" : ""} `}>
+            <div className={`categories ${heightLimit ? "height-limit" : ""}`} ref={scrollRef} onScroll={updateScrollFade}>
                 {isLoading ? <p>Loading...</p>
             :
                 categories.map((cat) =>

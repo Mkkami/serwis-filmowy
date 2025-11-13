@@ -36,15 +36,14 @@ function MediaList() {
             setIsLoading(true);
             const response = await search(searchParams);
             const data = await response;
+            const cont = await data.json();
 
-            console.log(data);
-
-            setResults(data.content);
+            setResults(cont.content);
             setIsLoading(false);
         }
         fetchData();
         
-    }, [currentParams, searchParams, ])
+    }, [currentParams, searchParams])
 
     const updateSearch = (newParams) => {
         const updatedParams = new URLSearchParams(searchParams);
@@ -81,8 +80,24 @@ function MediaList() {
 
     return (
         <div>
-            <h1>LISTTTT</h1>
-            <Categories selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
+            <div className="sort">
+                <button onClick={() => updateSort('title')}>Title</button>
+                <button onClick={() => updateSort('averageRating')}>Score</button>
+                <button onClick={() => updateSort('ratingCount')}>review number</button>
+                <button onClick={() => updateSort('releaseYear')}>year</button>
+                
+            </div>
+            <Categories style={{innerHeight: "1000px"}} selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
+            <div className="results">
+                {results.map(res => 
+                    <div className="media-card">
+                        <h3>{res.title}</h3>
+                        <p>{res.mediaType}</p>
+                        <p>{res.releaseYear}</p>
+                        <p>{res.averageRating}/10 ({res.reviewCount})</p>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
