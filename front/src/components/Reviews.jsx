@@ -1,10 +1,12 @@
 import { useReducer, useRef, useState } from "react";
 import "../styles/Review.css"
+import { addReview } from "../api/api";
 
 function Reviews({reviews, type, id}) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
+    const [error, setError] = useState("");
 
     const handleAddReview = () => {
         setDialogOpen(true);
@@ -14,8 +16,15 @@ function Reviews({reviews, type, id}) {
         setDialogOpen(false);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const res = await addReview(id, type.toLowerCase(), rating, comment);
+        if (!res.ok) {
+            setError(await res.text());
+            return;
+        }
+        setError("");
         handleClose();
     }
 
@@ -58,6 +67,7 @@ function Reviews({reviews, type, id}) {
                         <label htmlFor="comment" >Comment</label>
                         <input id="comment" name="comment" type="text" onChange={(e) => setComment(e.target.value)}/>
                     </div>
+                    {error && <p className="error">{error}</p>}
                     <button>Submit</button>
                 </form>
             </dialog>

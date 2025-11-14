@@ -3,8 +3,10 @@ package com.app.config;
 import com.app.entity.Category;
 import com.app.entity.User;
 import com.app.entity.dto.UserLoginRequest;
+import com.app.entity.dto.film.CreateFilmRequest;
 import com.app.repository.CategoryRepository;
 import com.app.repository.UserRepository;
+import com.app.service.FilmService;
 import com.app.service.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,6 +27,9 @@ public class DataInitializer {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FilmService filmService;
 
     public DataInitializer(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
@@ -44,6 +50,19 @@ public class DataInitializer {
     @PostConstruct
     public void initUser() {
         userService.createUser(new UserLoginRequest("user", "password"));
+    }
+
+    @PostConstruct
+    public void initFilm() {
+        List<String> cat = new ArrayList<>();
+        cat.add("Action");
+        cat.add("Fantasy");
+        filmService.createFilm(new CreateFilmRequest(
+                "Amazing Film",
+                120,
+                2025,
+                cat
+        ));
     }
 
     private void createCategoryIfNotExists(String name) {

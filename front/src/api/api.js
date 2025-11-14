@@ -65,14 +65,15 @@ export const getEpisodes = async (id) => {
 }
 
 export const addReview = async (id, type, rating, comment) => {
-    return await fetch(`http://localhost:8080/${type}/${id}/review}`, {
-        header: {
-            "Content-Type": "application/json",
+    return await fetch(`http://localhost:8080/${type}/${id}/review`, {
+        headers: {
+            'Content-Type': 'application/json'
         },
-        body: {
+        body: JSON.stringify({
             rating,
             comment
-        },
+        }),
+        method: "POST",
         credentials: "include"
     })
 }
