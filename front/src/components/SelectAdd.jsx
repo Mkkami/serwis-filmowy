@@ -1,13 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/SelectAdd.css"
-import { useEffect } from "react";
 
 function SelectAdd({handleClose}) {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log("addddd");
-    })
 
     const handleMovieClick = () => {
         handleClose();

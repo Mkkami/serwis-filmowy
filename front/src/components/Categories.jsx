@@ -39,7 +39,6 @@ function Categories({selectedCategories, setSelectedCategories, heightLimit=fals
         }
 
         setSelectedCategories(newSet);
-        console.log(Array.from(newSet));
     }
 
     return (

@@ -19,7 +19,6 @@ function Series() {
 
             const data = await res.json();
             setSeriesData(data);
-            console.log(data);
 
 
         }

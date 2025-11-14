@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const params = {
-    title: "",
-    categoryIds: [],
-    page: 0,
-    sortBy: "title",
-    sortDirection: "asc"
-}
-
 function Search() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();

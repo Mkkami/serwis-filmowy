@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from "react";
+import { useState } from "react";
 import "../styles/Review.css"
 import { addReview } from "../api/api";
 

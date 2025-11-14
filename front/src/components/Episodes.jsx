@@ -9,7 +9,6 @@ function Episodes({id}) {
     useEffect(() => {
         const fetchData = async () => {
             const res = await getEpisodes(id);
-            console.log(res);
             const dat = await res.json();
             setData(dat);
         }

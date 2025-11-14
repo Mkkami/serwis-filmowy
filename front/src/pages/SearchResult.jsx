@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { search } from "../api/api";
 import Categories from "../components/Categories";
 import "../styles/Results.css"
@@ -106,7 +106,7 @@ function MediaList() {
                 
                 </div>
                 <div className="results">
-                    {results.map(res =>
+                    {!isLoading ? results.map(res =>
                         <div key={res.id} className="media-card" onClick={() => openDetails(res.mediaType, res.id)} >
                             <span className="media-type">{res.mediaType}</span>
                             <div className="info">
@@ -115,7 +115,9 @@ function MediaList() {
                             </div>
                             <p className="rating">{res.averageRating}/10 ({res.reviewCount})</p>
                         </div>
-                    )}
+                    )
+                    :
+                    <p>Loading...</p>}
                 </div>
             </div>
             <Categories style={{innerHeight: "1000px"}} selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
