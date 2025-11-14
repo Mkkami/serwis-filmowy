@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { search } from "../api/api";
 import Categories from "../components/Categories";
+import "../styles/Results.css"
 
 const initParams = {
     title: "",
@@ -91,25 +92,29 @@ function MediaList() {
 
 
     return (
-        <div>
-            <div className="sort">
-                <button onClick={() => updateSort('title')}>{sortDisplay('title')}Title</button>
-                <button onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')}Score</button>
-                <button onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')}review number</button>
-                <button onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')}year</button>
+        <div className="results-container">
+            <div>
+                <div className="sort">
+                    <button onClick={() => updateSort('title')}>{sortDisplay('title')}Title</button>
+                    <button onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')}Score</button>
+                    <button onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')}review number</button>
+                    <button onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')}year</button>
                 
+                </div>
+                <div className="results">
+                    {results.map(res =>
+                        <div key={res.id} className="media-card">
+                            <span className="media-type">{res.mediaType}</span>
+                            <div className="info">
+                                <h3>{res.title}</h3>
+                                <p className="release-year">{res.releaseYear}</p>
+                            </div>
+                            <p className="rating">{res.averageRating}/10 ({res.reviewCount})</p>
+                        </div>
+                    )}
+                </div>
             </div>
             <Categories style={{innerHeight: "1000px"}} selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
-            <div className="results">
-                {results.map(res => 
-                    <div key={res.id} className="media-card">
-                        <h3>{res.title}</h3>
-                        <p>{res.mediaType}</p>
-                        <p>{res.releaseYear}</p>
-                        <p>{res.averageRating}/10 ({res.reviewCount})</p>
-                    </div>
-                )}
-            </div>
         </div>
     )
 }
