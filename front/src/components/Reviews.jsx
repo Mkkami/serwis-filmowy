@@ -1,17 +1,39 @@
+import { useReducer, useRef, useState } from "react";
+import "../styles/Review.css"
 
-function Reviews({reviews}) {
+function Reviews({reviews, type, id}) {
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState("");
 
-    if (reviews === null) {
-        return (
-            <div className="reviews">
-                No reviews yet.
-            </div>
-        )
+    const handleAddReview = () => {
+        setDialogOpen(true);
+    }
+
+    const handleClose = () => {
+        setDialogOpen(false);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleClose();
+    }
+
+    const handleChangeRating = (e) => {
+        if (e.target.value > 10) {
+            e.target.value = 10
+        }
+        if (e.target.value < 0) {
+            e.target.value = 0
+        }
+        setRating(e.target.value);
     }
     
     return (
+        <>
         <div className="reviews">
             <h2>Reviews</h2>
+            <button onClick={handleAddReview}>Add</button>
             {reviews.map(rev => 
                 <div key={rev.id} className="review-card">
                     <div className="score">
@@ -23,7 +45,25 @@ function Reviews({reviews}) {
                     </div>
                 </div>
             )}
-            </div>
+        </div>
+        {dialogOpen &&
+            <dialog>
+                <button onClick={handleClose}>X</button>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="rating">Rating</label>
+                        <input id="rating" name="rating" type="number" onChange={(e) => handleChangeRating(e)} />/10
+                    </div>
+                    <div>
+                        <label htmlFor="comment" >Comment</label>
+                        <input id="comment" name="comment" type="text" onChange={(e) => setComment(e.target.value)}/>
+                    </div>
+                    <button>Submit</button>
+                </form>
+            </dialog>
+        }
+        </>
+
     )
 }
 export default Reviews;

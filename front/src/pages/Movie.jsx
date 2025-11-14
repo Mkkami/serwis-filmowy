@@ -43,7 +43,7 @@ function Movie() {
                     return (cat.name + ", ")
                 })}</p>
             </div>
-            <Reviews reviews={filmData.reviews}/>
+            <Reviews reviews={filmData.reviews} type="FILM" id={filmData.id}/>
         </div>
     )
 }

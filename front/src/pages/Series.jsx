@@ -46,7 +46,7 @@ function Series() {
                 })}</p>
             </div>
             <Episodes id={seriesData.id}/>
-            <Reviews reviews={seriesData.reviews}/>
+            <Reviews reviews={seriesData.reviews} type={"SERIES"} id={seriesData.id}/>
         </div>
     )
 }

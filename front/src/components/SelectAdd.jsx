@@ -11,7 +11,7 @@ function SelectAdd({handleClose}) {
 
     const handleMovieClick = () => {
         handleClose();
-        navigate("/add/movie");
+        navigate("/add/film");
     }
 
     const handleSeriesClick = () => {
@@ -23,7 +23,7 @@ function SelectAdd({handleClose}) {
         <dialog open>
             <button className="close-btn" onClick={handleClose}>X</button>
             <div>
-                <button onClick={handleMovieClick}>Movie</button>
+                <button onClick={handleMovieClick}>Film</button>
                 <button onClick={handleSeriesClick}>Series</button>
             </div>
         </dialog>

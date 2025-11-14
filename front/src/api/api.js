@@ -63,3 +63,16 @@ export const search = async (url) => {
 export const getEpisodes = async (id) => {
     return await fetch(`http://localhost:8080/series/${id}/episodes`)
 }
+
+export const addReview = async (id, type, rating, comment) => {
+    return await fetch(`http://localhost:8080/${type}/${id}/review}`, {
+        header: {
+            "Content-Type": "application/json",
+        },
+        body: {
+            rating,
+            comment
+        },
+        credentials: "include"
+    })
+}

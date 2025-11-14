@@ -90,6 +90,10 @@ function MediaList() {
         return <>&#9660;</>;
     }
 
+    const openDetails = (type, id) => {
+        navigate(`/${type}/${id}`);
+    }
+
 
     return (
         <div className="results-container">
@@ -103,7 +107,7 @@ function MediaList() {
                 </div>
                 <div className="results">
                     {results.map(res =>
-                        <div key={res.id} className="media-card">
+                        <div key={res.id} className="media-card" onClick={() => openDetails(res.mediaType, res.id)} >
                             <span className="media-type">{res.mediaType}</span>
                             <div className="info">
                                 <h3>{res.title}</h3>

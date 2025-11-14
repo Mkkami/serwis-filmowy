@@ -27,7 +27,7 @@ const router = createBrowserRouter([
             element: <SearchResult />
         },
         {
-            path: "/movie/:id",
+            path: "/film/:id",
             element: <Movie />
         },
         {
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             path: "/add",
         },
         {
-            path: "/add/movie",
+            path: "/add/film",
             element: <MovieForm/>
         },
         {
