@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getSeries } from "../api/api";
 import Reviews from "../components/Reviews";
 import "../styles/Details.css"
+import Episodes from "../components/Episodes";
 
 function Series() {
     const params = useParams();
@@ -18,6 +19,7 @@ function Series() {
 
             const data = await res.json();
             setSeriesData(data);
+            console.log(data);
 
 
         }
@@ -43,6 +45,7 @@ function Series() {
                     return (cat.name + ", ")
                 })}</p>
             </div>
+            <Episodes id={seriesData.id}/>
             <Reviews reviews={seriesData.reviews}/>
         </div>
     )

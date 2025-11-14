@@ -23,15 +23,6 @@ function Reviews({reviews}) {
                     </div>
                 </div>
             )}
-            <div key='5' className="review-card">
-                <div className="score">
-                    <p>10/10</p>
-                </div>
-                <div className="description">
-                    <p className="username">useeeear</p>
-                    <p className="comment">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum perferendis, alias a delectus sunt ullam minus voluptatem facere quisquam eaque qui voluptates facilis, suscipit, deserunt veritatis odit eum quas reprehenderit.</p>
-                </div>
-                </div>
             </div>
     )
 }

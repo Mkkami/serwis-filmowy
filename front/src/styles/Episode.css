@@ -1,0 +1,6 @@
+.episode-card {
+    display: flex;
+    border: 1px solid var(--text-second);
+    margin: 1em 0;
+}
+

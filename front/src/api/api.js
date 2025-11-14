@@ -59,3 +59,7 @@ export const search = async (url) => {
     return await fetch(`http://localhost:8080/search?${url}`, {
     });
 }
+
+export const getEpisodes = async (id) => {
+    return await fetch(`http://localhost:8080/series/${id}/episodes`)
+}
