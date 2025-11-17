@@ -22,10 +22,10 @@ function ProfileDropdown({handleLogout}) {
         return () =>{
             document.removeEventListener("mousedown", handleClickOutside);
         }
-    })
+    }, []);
 
     return (
-        <div className="dropdown-container">
+        <div className="dropdown-container" ref={dropdownRef}>
             <button onClick={toggleMenu} className="dropdown-toggle">
                 Profile
             </button>

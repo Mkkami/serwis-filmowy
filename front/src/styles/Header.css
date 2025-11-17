@@ -28,6 +28,7 @@ nav {
     flex: 1;
     display: flex;
     justify-content: center;
+    margin: 1em;
 }
 
 .form-search-bar {
@@ -38,9 +39,9 @@ nav {
 }
 
 .search-bar {
-    flex: 1;
+    flex-shrink: 1;
     padding: 0.5rem;
-    max-width: 50%;
+    /* max-width: 50%; */
     margin: 0;
     border-radius: 8px 0 0 8px;
     border: 1px solid transparent;
@@ -56,6 +57,7 @@ nav {
     border-radius: 0 8px 8px 0;
     border: 1px solid transparent;
     background-color: var(--bg-highlight);
+    margin-right: 1em;
 }
 
 .form-search-bar button:hover {
