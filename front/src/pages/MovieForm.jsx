@@ -70,7 +70,7 @@ function MovieForm() {
 
     return (
         <div className="movie-form form">
-            <h2>Add new movie</h2>
+            <h2>Add new film</h2>
             <form onSubmit={handleSubmit}>
                 <div className="main-content">
                     <div className="form-container">

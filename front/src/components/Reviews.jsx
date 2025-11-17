@@ -46,7 +46,7 @@ function Reviews({reviews, type, id}) {
             {reviews.map(rev => 
                 <div key={rev.id} className="review-card">
                     <div className="score">
-                        <p>10/10</p>
+                        <p>{rev.rating}/10</p>
                     </div>
                     <div className="description">
                         <p className="username">{rev.user}</p>
