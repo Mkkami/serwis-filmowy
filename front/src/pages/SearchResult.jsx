@@ -12,7 +12,7 @@ const initParams = {
     sortDirection: "asc"
 }
 
-function MediaList() {
+function SearchResult() {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const [results, setResults] = useState([]);
@@ -125,4 +125,4 @@ function MediaList() {
         </div>
     )
 }
-export default MediaList;
+export default SearchResult;
