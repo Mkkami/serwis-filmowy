@@ -16,7 +16,7 @@
     background-color: transparent;
 }
 
-.sort button .selected {
+.sort button.selected {
     color: var(--orange);
 }
 
@@ -36,6 +36,7 @@
     right: 40%;
     border: 1px solid var(--purple);
     font-weight: bold;
+    border-radius: 8px;
 }
 
 .media-card * {

@@ -18,6 +18,7 @@ function MediaList() {
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cateogries, setCategories] = useState(new Set());
+    const [selectedSort, setSelectedSort] = useState('title');
 
     const currentParams = useMemo(() => {
         const title = searchParams.get('title') || initParams.title;
@@ -74,7 +75,7 @@ function MediaList() {
         const newDirection = currentParams.sortBy == newSortBy && currentParams.sortDirection === 'asc'
         ? "desc"
         : "asc";
-
+        setSelectedSort(newSortBy);
         updateSearch({sortBy: newSortBy, sortDirection: newDirection, page: 0})
     }
 
@@ -99,10 +100,10 @@ function MediaList() {
         <div className="results-container">
             <div>
                 <div className="sort">
-                    <button onClick={() => updateSort('title')}>{sortDisplay('title')}Title</button>
-                    <button onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')}Score</button>
-                    <button onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')}review number</button>
-                    <button onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')}year</button>
+                    <button className={`${selectedSort == 'title' ? "selected" : ""}`} onClick={() => updateSort('title')}>{sortDisplay('title')} Title</button>
+                    <button className={`${selectedSort == 'averageRating' ? "selected" : ""}`} onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')} Score</button>
+                    <button className={`${selectedSort == 'ratingCount' ? "selected" : ""}`} onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')} Number of reviews</button>
+                    <button className={`${selectedSort == 'releaseYear' ? "selected" : ""}`} onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')} Year</button>
                 
                 </div>
                 <div className="results">
