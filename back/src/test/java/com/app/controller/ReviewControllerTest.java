@@ -97,6 +97,16 @@ class ReviewControllerTest {
     }
 
     @Test
+    void reviewFilm_WithoutUser_ShouldReturnUnauthorized() throws Exception {
+        // When & Then
+        mockMvc.perform(post("/film/1/review")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reviewRequest)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     @WithMockUser(username = "testuser")
     void reviewSeries_WhenError_ShouldReturnBadRequest() throws Exception {
         // Given

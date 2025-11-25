@@ -158,6 +158,20 @@ class FilmControllerTest {
 
     @Test
     @WithMockUser
+    void createFilm_WithMalformedJson_ShouldReturnBadRequest() throws Exception {
+        // Given
+        String malformedJson = "{ \"title\": \"Test Film\", \"duration\": 120 "; // Missing closing brace
+
+        // When & Then
+        mockMvc.perform(post("/film")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(malformedJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
     void updateFilm_WhenNotExists_ShouldReturnBadRequest() throws Exception {
         // Given
         when(filmService.updateFilm(eq(999L), any(CreateFilmRequest.class)))

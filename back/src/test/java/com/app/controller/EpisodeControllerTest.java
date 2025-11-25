@@ -87,6 +87,19 @@ class EpisodeControllerTest {
     }
 
     @Test
+    void getAll_WithoutUser_ShouldReturnUnauthorized() throws Exception {
+        mockMvc.perform(get("/series/1/episodes"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void getAll_WithInvalidPathVariable_ShouldReturnBadRequest() throws Exception {
+        mockMvc.perform(get("/series/abc/episodes"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @WithMockUser
     void createEpisode_ShouldAddEpisode() throws Exception {
         // Given
@@ -119,4 +132,36 @@ class EpisodeControllerTest {
 
         verify(seriesService, times(1)).addEpisode(eq(1L), any(NewEpisodeRequest.class));
     }
+
+    @Test
+    void createEpisode_WithoutUser_ShouldReturnUnauthorized() throws Exception {
+        mockMvc.perform(post("/series/1/episode")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(episodeRequest)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void createEpisode_WithMalformedJson_ShouldReturnBadRequest() throws Exception {
+        String invalidJson = "{ \"title\": \"Pilot\", "; // niedomknięty JSON
+
+        mockMvc.perform(post("/series/1/episode")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(invalidJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void createEpisode_WithInvalidPathVariable_ShouldReturnBadRequest() throws Exception {
+        mockMvc.perform(post("/series/abc/episode")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(episodeRequest)))
+                .andExpect(status().isBadRequest());
+    }
+
 }

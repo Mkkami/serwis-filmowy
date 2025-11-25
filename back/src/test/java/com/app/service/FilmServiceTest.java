@@ -2,8 +2,10 @@ package com.app.service;
 
 import com.app.entity.Category;
 import com.app.entity.Film;
+import com.app.entity.Review;
 import com.app.entity.dto.film.CreateFilmRequest;
 import com.app.entity.dto.film.FullFilmRequest;
+import com.app.entity.dto.review.NewReviewRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.repository.FilmRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +59,7 @@ class FilmServiceTest {
         testFilm.setDuration(120);
         testFilm.setReleaseYear(2024);
         testFilm.setCategories(Arrays.asList(testCategory1, testCategory2));
-        testFilm.setReviews(Arrays.asList());
+        testFilm.setReviews(new java.util.ArrayList<>());
 
         createFilmRequest = new CreateFilmRequest(
                 "New Film",
@@ -236,5 +237,22 @@ class FilmServiceTest {
 
         verify(filmRepository, times(1)).findById(999L);
         verify(filmRepository, never()).delete(any(Film.class));
+    }
+
+    @Test
+    void addReview_ShouldAddReviewToFilm() {
+        // Given
+        NewReviewRequest reviewRequest = new NewReviewRequest(5, "Great!");
+        Review review = new Review();
+        review.setRating(5);
+        when(filmRepository.findById(1L)).thenReturn(Optional.of(testFilm));
+        when(reviewService.addReviewToFilm(eq(testFilm), eq(reviewRequest), eq("user"))).thenReturn(review);
+
+        // When
+        filmService.addReview(1L, reviewRequest, "user");
+
+        // Then
+        verify(filmRepository, times(1)).save(testFilm);
+        assertThat(testFilm.getReviews()).contains(review);
     }
 }
