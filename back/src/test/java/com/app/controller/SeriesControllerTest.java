@@ -170,4 +170,34 @@ class SeriesControllerTest {
 
         verify(seriesService, times(1)).updateSeries(eq(999L), any(CreateSeriesRequest.class));
     }
+
+    @Test
+    @WithMockUser
+    void deleteSeries_WhenExists_ShouldReturnNoContent() throws Exception {
+        // Given
+        doNothing().when(seriesService).deleteSeries(1L);
+
+        // When & Then
+        mockMvc.perform(delete("/series/1")
+                        .with(csrf()))
+                .andExpect(status().isNoContent());
+
+        verify(seriesService, times(1)).deleteSeries(1L);
+    }
+
+    @Test
+    @WithMockUser
+    void deleteSeries_WhenNotExists_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new SeriesNotFoundException(999L)).when(seriesService).deleteSeries(999L);
+
+        // When & Then
+        mockMvc.perform(delete("/series/999")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Series with id: 999 not found"));
+
+        verify(seriesService, times(1)).deleteSeries(999L);
+    }
+
 }

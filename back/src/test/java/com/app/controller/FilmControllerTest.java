@@ -187,4 +187,33 @@ class FilmControllerTest {
 
         verify(filmService, times(1)).updateFilm(eq(999L), any(CreateFilmRequest.class));
     }
+    
+    @Test
+    @WithMockUser
+    void deleteFilm_WhenExists_ShouldReturnNoContent() throws Exception {
+        // Given
+        doNothing().when(filmService).deleteFilm(1L);
+
+        // When & Then
+        mockMvc.perform(delete("/film/1")
+                        .with(csrf()))
+                .andExpect(status().isNoContent());
+
+        verify(filmService, times(1)).deleteFilm(1L);
+    }
+
+    @Test
+    @WithMockUser
+    void deleteFilm_WhenNotExists_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new FilmNotFoundException(999L)).when(filmService).deleteFilm(999L);
+
+        // When & Then
+        mockMvc.perform(delete("/film/999")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Film not found"));
+
+        verify(filmService, times(1)).deleteFilm(999L);
+    }
 }

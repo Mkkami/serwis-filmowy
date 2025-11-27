@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -122,5 +123,119 @@ class ReviewControllerTest {
                 .andExpect(content().string("User already reviewed this series"));
 
         verify(seriesService, times(1)).addReview(eq(1L), any(NewReviewRequest.class), eq("testuser"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteFilmReview_WhenSuccess_ShouldReturnOk() throws Exception {
+        // Given
+        doNothing().when(filmService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/film/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Review has been deleted"));
+        
+        verify(filmService).deleteReview(1L, 10L, "testuser");
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteFilmReview_WhenUnauthorized_ShouldReturnForbidden() throws Exception {
+        // Given
+        doThrow(new com.app.exception.UnauthorizedReviewDeletionException())
+                .when(filmService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/film/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isForbidden())
+                .andExpect(content().string("You are not authorized to delete this review"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteFilmReview_WhenReviewNotFound_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new com.app.exception.ReviewNotFoundException(10L))
+                .when(filmService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/film/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Review with id: 10 not found"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteFilmReview_WhenFilmNotFound_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new com.app.exception.FilmNotFoundException(1L))
+                .when(filmService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/film/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Film with id: 1 not found"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteSeriesReview_WhenSuccess_ShouldReturnOk() throws Exception {
+        // Given
+        doNothing().when(seriesService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Review has been deleted"));
+        
+        verify(seriesService).deleteReview(1L, 10L, "testuser");
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteSeriesReview_WhenUnauthorized_ShouldReturnForbidden() throws Exception {
+        // Given
+        doThrow(new com.app.exception.UnauthorizedReviewDeletionException())
+                .when(seriesService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isForbidden())
+                .andExpect(content().string("You are not authorized to delete this review"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteSeriesReview_WhenReviewNotFound_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new com.app.exception.ReviewNotFoundException(10L))
+                .when(seriesService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Review with id: 10 not found"));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void deleteSeriesReview_WhenSeriesNotFound_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new com.app.exception.SeriesNotFoundException(1L))
+                .when(seriesService).deleteReview(1L, 10L, "testuser");
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/review/10")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Series with id: 1 not found"));
     }
 }

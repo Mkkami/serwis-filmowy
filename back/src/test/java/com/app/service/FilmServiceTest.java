@@ -255,4 +255,50 @@ class FilmServiceTest {
         verify(filmRepository, times(1)).save(testFilm);
         assertThat(testFilm.getReviews()).contains(review);
     }
+
+    @Test
+    void deleteReview_ShouldRemoveReviewFromFilm() {
+        // Given
+        Review review = new Review();
+        review.setId(10L);
+        review.setRating(5);
+        testFilm.addReview(review);
+        
+        when(filmRepository.findById(1L)).thenReturn(Optional.of(testFilm));
+        doNothing().when(reviewService).deleteReview(10L, "user");
+
+        // When
+        filmService.deleteReview(1L, 10L, "user");
+
+        // Then
+        verify(filmRepository, times(1)).save(testFilm);
+        assertThat(testFilm.getReviews()).doesNotContain(review);
+    }
+
+    @Test
+    void deleteReview_WhenFilmNotExists_ShouldThrowException() {
+        // Given
+        when(filmRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThatThrownBy(() -> filmService.deleteReview(999L, 10L, "user"))
+                .isInstanceOf(FilmNotFoundException.class)
+                .hasMessageContaining("999");
+        
+        verify(reviewService, never()).deleteReview(anyLong(), anyString());
+    }
+
+    @Test
+    void deleteReview_WhenReviewNotExistsInFilm_ShouldThrowException() {
+        // Given
+        when(filmRepository.findById(1L)).thenReturn(Optional.of(testFilm));
+        // Film has no reviews
+
+        // When & Then
+        assertThatThrownBy(() -> filmService.deleteReview(1L, 999L, "user"))
+                .isInstanceOf(com.app.exception.ReviewNotFoundException.class)
+                .hasMessageContaining("999");
+        
+        verify(reviewService, never()).deleteReview(anyLong(), anyString());
+    }
 }

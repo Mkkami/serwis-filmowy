@@ -212,4 +212,112 @@ class SeriesServiceTest {
         assertThatThrownBy(() -> seriesService.addEpisode(1L, episodeRequest))
                 .isInstanceOf(EpisodeAlreadyExistsException.class);
     }
+
+    @Test
+    void deleteSeries_WhenExists_ShouldDeleteSeries() {
+        // Given
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(testSeries));
+        doNothing().when(seriesRepository).delete(testSeries);
+
+        // When
+        seriesService.deleteSeries(1L);
+
+        // Then
+        verify(seriesRepository, times(1)).delete(testSeries);
+    }
+
+    @Test
+    void deleteSeries_WhenNotExists_ShouldThrowException() {
+        // Given
+        when(seriesRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThatThrownBy(() -> seriesService.deleteSeries(999L))
+                .isInstanceOf(SeriesNotFoundException.class);
+        
+        verify(seriesRepository, never()).delete(any(Series.class));
+    }
+
+    @Test
+    void deleteEpisode_WhenExists_ShouldRemoveEpisode() {
+        // Given
+        Episode episode = new Episode();
+        episode.setId(10L);
+        episode.setEpisodeNumber(1);
+        testSeries.addEpisode(episode);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(testSeries));
+
+        // When
+        seriesService.deleteEpisode(1L, 10L);
+
+        // Then
+        verify(seriesRepository, times(1)).save(testSeries);
+        assertThat(testSeries.getEpisodes()).doesNotContain(episode);
+    }
+
+    @Test
+    void deleteEpisode_WhenSeriesNotExists_ShouldThrowException() {
+        // Given
+        when(seriesRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThatThrownBy(() -> seriesService.deleteEpisode(999L, 10L))
+                .isInstanceOf(SeriesNotFoundException.class);
+    }
+
+    @Test
+    void deleteEpisode_WhenEpisodeNotExists_ShouldThrowException() {
+        // Given
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(testSeries));
+        // Series has no episodes
+
+        // When & Then
+        assertThatThrownBy(() -> seriesService.deleteEpisode(1L, 999L))
+                .isInstanceOf(com.app.exception.EpisodeNotFoundException.class);
+    }
+
+    @Test
+    void deleteReview_ShouldRemoveReviewFromSeries() {
+        // Given
+        Review review = new Review();
+        review.setId(10L);
+        review.setRating(5);
+        testSeries.addReview(review);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(testSeries));
+        doNothing().when(reviewService).deleteReview(10L, "user");
+
+        // When
+        seriesService.deleteReview(1L, 10L, "user");
+
+        // Then
+        verify(seriesRepository, times(1)).save(testSeries);
+        assertThat(testSeries.getReviews()).doesNotContain(review);
+    }
+
+    @Test
+    void deleteReview_WhenSeriesNotExists_ShouldThrowException() {
+        // Given
+        when(seriesRepository.findById(999L)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThatThrownBy(() -> seriesService.deleteReview(999L, 10L, "user"))
+                .isInstanceOf(SeriesNotFoundException.class);
+        
+        verify(reviewService, never()).deleteReview(anyLong(), anyString());
+    }
+
+    @Test
+    void deleteReview_WhenReviewNotExistsInSeries_ShouldThrowException() {
+        // Given
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(testSeries));
+        // Series has no reviews
+
+        // When & Then
+        assertThatThrownBy(() -> seriesService.deleteReview(1L, 999L, "user"))
+                .isInstanceOf(com.app.exception.ReviewNotFoundException.class);
+        
+        verify(reviewService, never()).deleteReview(anyLong(), anyString());
+    }
 }

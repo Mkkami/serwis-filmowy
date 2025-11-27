@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
@@ -115,5 +115,55 @@ class ReviewServiceTest {
 
         // Then
         assertThat(result).isNotNull();
+    }
+
+    @Test
+    void deleteReview_WhenUserIsOwner_ShouldDelete() {
+        // Given
+        Review review = new Review();
+        review.setId(1L);
+        review.setUser(testUser);
+        
+        when(reviewRepository.findById(1L)).thenReturn(java.util.Optional.of(review));
+        when(userRepository.findByUsername("testuser")).thenReturn(testUser);
+
+        // When
+        reviewService.deleteReview(1L, "testuser");
+
+        // Then
+        verify(reviewRepository).delete(review);
+    }
+
+    @Test
+    void deleteReview_WhenReviewNotExists_ShouldThrowException() {
+        // Given
+        when(reviewRepository.findById(999L)).thenReturn(java.util.Optional.empty());
+
+        // When & Then
+        assertThatThrownBy(() -> reviewService.deleteReview(999L, "testuser"))
+                .isInstanceOf(com.app.exception.ReviewNotFoundException.class);
+        
+        verify(reviewRepository, never()).delete(any(Review.class));
+    }
+
+    @Test
+    void deleteReview_WhenUserIsNotOwner_ShouldThrowException() {
+        // Given
+        User otherUser = new User();
+        otherUser.setId(2L);
+        otherUser.setUsername("other");
+
+        Review review = new Review();
+        review.setId(1L);
+        review.setUser(otherUser);
+        
+        when(reviewRepository.findById(1L)).thenReturn(java.util.Optional.of(review));
+        when(userRepository.findByUsername("testuser")).thenReturn(testUser);
+
+        // When & Then
+        assertThatThrownBy(() -> reviewService.deleteReview(1L, "testuser"))
+                .isInstanceOf(com.app.exception.UnauthorizedReviewDeletionException.class);
+        
+        verify(reviewRepository, never()).delete(any(Review.class));
     }
 }

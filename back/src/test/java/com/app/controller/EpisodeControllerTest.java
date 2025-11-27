@@ -22,6 +22,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -164,4 +165,47 @@ class EpisodeControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @WithMockUser
+    void deleteEpisode_WhenExists_ShouldReturnNoContent() throws Exception {
+        // Given
+        doNothing().when(seriesService).deleteEpisode(1L, 1L);
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/episode/1")
+                        .with(csrf()))
+                .andExpect(status().isNoContent());
+
+        verify(seriesService, times(1)).deleteEpisode(1L, 1L);
+    }
+
+    @Test
+    @WithMockUser
+    void deleteEpisode_WhenSeriesNotExists_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new SeriesNotFoundException(999L)).when(seriesService).deleteEpisode(999L, 1L);
+
+        // When & Then
+        mockMvc.perform(delete("/series/999/episode/1")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Series with id: 999 not found"));
+
+        verify(seriesService, times(1)).deleteEpisode(999L, 1L);
+    }
+
+    @Test
+    @WithMockUser
+    void deleteEpisode_WhenEpisodeNotExists_ShouldReturnBadRequest() throws Exception {
+        // Given
+        doThrow(new com.app.exception.EpisodeNotFoundException(999L)).when(seriesService).deleteEpisode(1L, 999L);
+
+        // When & Then
+        mockMvc.perform(delete("/series/1/episode/999")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Episode with id: 999 not found"));
+
+        verify(seriesService, times(1)).deleteEpisode(1L, 999L);
+    }
 }
