@@ -3,6 +3,7 @@ package com.app.controller;
 import com.app.entity.Episode;
 import com.app.entity.dto.episode.NewEpisodeRequest;
 import com.app.exception.EpisodeAlreadyExistsException;
+import com.app.exception.EpisodeNotFoundException;
 import com.app.exception.SeriesNotFoundException;
 import com.app.service.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,17 @@ public class EpisodeController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("Episode has been added");
+    }
+
+    @DeleteMapping("series/{seriesId}/episode/{episodeId}")
+    public ResponseEntity<?> deleteEpisode(@PathVariable Long seriesId, @PathVariable Long episodeId) {
+        try {
+            seriesService.deleteEpisode(seriesId, episodeId);
+
+        } catch (EpisodeNotFoundException | SeriesNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
     }
 }

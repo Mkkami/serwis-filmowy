@@ -55,7 +55,17 @@ public class ReviewService {
         return createReview(series.getReviews(), reviewRequest, username);
     }
 
-    public void deleteReview() {
-        // TODO
+    public void deleteReview(Long reviewId, String username) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new com.app.exception.ReviewNotFoundException(reviewId));
+        
+        User user = userRepository.findByUsername(username);
+        
+        // Check if the user is the owner of the review
+        if (!review.getUser().getId().equals(user.getId())) {
+            throw new com.app.exception.UnauthorizedReviewDeletionException();
+        }
+        
+        reviewRepository.delete(review);
     }
 }
