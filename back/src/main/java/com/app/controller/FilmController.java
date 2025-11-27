@@ -58,6 +58,16 @@ public class FilmController {
         return ResponseEntity.ok().body(updatedFilm);
     }
 
+    @DeleteMapping("film/{id}")
+    public ResponseEntity<?> deleteFilm(@PathVariable Long id) {
+        try {
+            filmService.deleteFilm(id);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body("Film not found");
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
 //    @GetMapping("film/search")
 //    public ResponseEntity<Page<FilmRequest>> search(
 //            @RequestParam(defaultValue = "") String title,

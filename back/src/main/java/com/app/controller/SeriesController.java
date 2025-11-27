@@ -51,5 +51,15 @@ public class SeriesController {
         return ResponseEntity.ok().body(updatedSeries);
     }
 
+    @DeleteMapping("series/{id}")
+    public ResponseEntity<?> deleteSeries(@PathVariable Long id) {
+        try {
+            seriesService.deleteSeries(id);
+        } catch (SeriesNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
+
 
 }

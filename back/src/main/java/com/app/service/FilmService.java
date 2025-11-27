@@ -95,4 +95,21 @@ public class FilmService {
         film.addReview(review);
         filmRepository.save(film);
     }
+
+    public void deleteReview(Long filmId, Long reviewId, String username) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new FilmNotFoundException(filmId));
+        
+        // Find the review to remove
+        Review reviewToRemove = film.getReviews().stream()
+                .filter(review -> review.getId().equals(reviewId))
+                .findFirst()
+                .orElseThrow(() -> new com.app.exception.ReviewNotFoundException(reviewId));
+        
+        // This will check authorization and delete the review from database
+        reviewService.deleteReview(reviewId, username);
+        
+        // Remove the review from the film's list and recalculate ratings
+        film.removeReview(reviewToRemove);
+        filmRepository.save(film);
+    }
 }

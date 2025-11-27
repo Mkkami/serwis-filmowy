@@ -59,6 +59,11 @@ public class Series {
         recalculareReviews();
     }
 
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        recalculareReviews();
+    }
+
     private void recalculareReviews() {
         if (reviews.isEmpty()) {
             averageRating = 0.0;

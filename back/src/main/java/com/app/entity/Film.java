@@ -48,7 +48,12 @@ public class Film {
         return reviews.size();
     }
 
-    public void recalculateReviews() {
+    public void removeReview(Review review) {
+        reviews.remove(review);
+        recalculateReviews();
+    }
+
+    private void recalculateReviews() {
         if (reviews.isEmpty()) {
             averageRating = 0.0;
             reviewCount = 0;

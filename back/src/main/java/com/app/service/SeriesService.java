@@ -10,6 +10,7 @@ import com.app.entity.dto.review.NewReviewRequest;
 import com.app.entity.dto.series.CreateSeriesRequest;
 import com.app.entity.dto.series.FullSeriesRequest;
 import com.app.exception.EpisodeAlreadyExistsException;
+import com.app.exception.EpisodeNotFoundException;
 import com.app.exception.SeriesNotFoundException;
 import com.app.repository.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,23 @@ public class SeriesService {
         seriesRepository.save(series);
     }
 
+    public void deleteReview(Long seriesId, Long reviewId, String username) {
+        Series series = seriesRepository.findById(seriesId).orElseThrow(() -> new SeriesNotFoundException(seriesId));
+        
+        // Find the review to remove
+        Review reviewToRemove = series.getReviews().stream()
+                .filter(review -> review.getId().equals(reviewId))
+                .findFirst()
+                .orElseThrow(() -> new com.app.exception.ReviewNotFoundException(reviewId));
+        
+        // This will check authorization and delete the review from database
+        reviewService.deleteReview(reviewId, username);
+        
+        // Remove the review from the series' list and recalculate ratings
+        series.removeReview(reviewToRemove);
+        seriesRepository.save(series);
+    }
+
     public List<Episode> getAllEpisodes(Long id) {
         Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
 
@@ -106,5 +124,22 @@ public class SeriesService {
         series.addEpisode(episode);
 
         seriesRepository.save(series);
+    }
+
+    public void deleteEpisode(Long seriesId, Long episodeId) {
+        Series series = seriesRepository.findById(seriesId).orElseThrow(() -> new SeriesNotFoundException(seriesId));
+        
+        Episode episodeToRemove = series.getEpisodes().stream()
+                .filter(episode -> episode.getId().equals(episodeId))
+                .findFirst()
+                .orElseThrow(() -> new EpisodeNotFoundException(episodeId));
+        
+        series.getEpisodes().remove(episodeToRemove);
+        seriesRepository.save(series);
+    }
+
+    public void deleteSeries(Long id) {
+        Series series = seriesRepository.findById(id).orElseThrow(() -> new SeriesNotFoundException(id));
+        seriesRepository.delete(series);
     }
 }
