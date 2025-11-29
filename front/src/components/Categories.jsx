@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { getCategories } from "../api/api";
-import "../styles/Categories.css"
+import "../styles/components/Categories.css"
 
 function Categories({selectedCategories, setSelectedCategories, heightLimit=false}) {
     const [isLoading, setIsLoading] = useState(true);

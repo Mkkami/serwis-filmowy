@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/Review.css"
+import "../styles/components/Review.css"
 import { addReview } from "../api/api";
 
 function Reviews({reviews, type, id}) {

@@ -1,7 +1,8 @@
 import Header from './components/Header';
 import './styles/App.css'
 import { Outlet } from 'react-router-dom';
-import './styles/Form.css'
+import './styles/components/Form.css'
+import './styles/components/Button.css'
 
 function App() {
 

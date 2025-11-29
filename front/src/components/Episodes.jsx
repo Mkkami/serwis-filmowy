@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getEpisodes } from "../api/api";
-import "../styles/Episode.css"
+import "../styles/components/Episode.css"
 
 function Episodes({id}) {
     const [open, setOpen] = useState(false);

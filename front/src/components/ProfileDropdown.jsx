@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import '../styles/Dropdown.css'
+import '../styles/components/Dropdown.css'
 
 function ProfileDropdown({handleLogout}) {
     const [isOpen, setIsOpen] = useState(false);

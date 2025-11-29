@@ -1,21 +1,27 @@
 import {useNavigate, Link} from 'react-router-dom'
-import "../styles/Header.css"
+import "../styles/components/Header.css"
 import { useAuth } from './AuthProvider';
 import { logout } from '../api/auth';
-import { useState } from 'react';
-import SelectAdd from './SelectAdd';
+import { useRef } from 'react';
+import SelectAdd from './AddItemDialog';
 import ProfileDropdown from './ProfileDropdown';
 import Search from './Search';
+import AddItemDialog from './AddItemDialog';
 
 function Header() {
     const navigate = useNavigate();
     const {isLoggedIn, setIsLoggedIn} = useAuth();
-    const [isDialogOpen, setDialogOpen] = useState(false);
+
+    const dialogRef = useRef(null);
 
     const handleLogout = async () => {
         await logout();
         setIsLoggedIn(false);
         navigate("/");
+    }
+
+    const handleOpenModal = () => {
+        dialogRef.current?.showModal();
     }
 
 
@@ -27,7 +33,7 @@ function Header() {
 
             <nav>
                 <Search/>
-                {isLoggedIn && <button onClick={() => setDialogOpen(true)}>Add</button>}
+                {isLoggedIn && <button onClick={handleOpenModal}>Add</button>}
             </nav>
 
             <div className='profile'>
@@ -37,7 +43,7 @@ function Header() {
                 <ProfileDropdown handleLogout={handleLogout}/>
             }
             </div>
-            {isDialogOpen && <SelectAdd handleClose={() => setDialogOpen(false)}/>}
+            {isLoggedIn && <AddItemDialog ref={dialogRef} />}
         </header>
     )
 }
