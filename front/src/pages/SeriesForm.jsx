@@ -91,7 +91,7 @@ function SeriesForm() {
                     </div>
                     <div className="categories-wrapper">
                         <h3>Categories</h3>
-                        <Categories selectedCategories={state.values.categories} setSelectedCategories={handleCategoryUpdate}/>
+                        <Categories heightLimit={true} selectedCategories={state.values.categories} setSelectedCategories={handleCategoryUpdate} />
                     </div>
                 </div>
                 {message && <p>{message}</p>}

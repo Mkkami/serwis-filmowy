@@ -1,3 +1,15 @@
 #rating {
-    width: 4ch;
+    width: 5ch;
+}
+
+.reviews {
+    border-top: 2px solid var(--bg-highlight);
+}
+
+.review-card {
+    background-color: var(--bg);
+    border-radius: 8px;
+    margin: 1em;
+    display: flex;
+    /* border-bottom: 1px solid var(--text-second); */
 }
