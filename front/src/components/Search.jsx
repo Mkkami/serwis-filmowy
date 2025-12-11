@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import search from "../assets/search.svg";
 
 function Search() {
     const [searchParams] = useSearchParams();
@@ -29,7 +30,7 @@ function Search() {
         <>
             <form className="form-search-bar" onSubmit={handleSubmit}>
                 <input className='search-bar' placeholder='Search' onChange={handleInput}></input>
-                <button type="submit">s</button>
+                <button type="submit"><img className="search-icon" src={search} alt="search" /></button>
             </form>
         </>
     )

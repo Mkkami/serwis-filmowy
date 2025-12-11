@@ -2,8 +2,8 @@ import { useReducer } from "react"
 import { loginFormReducer, initialState } from "../reducers/LoginFormReducer"
 import { formActions } from "../reducers/FormReducer"
 
-function AuthForm({onValidate, onSubmit, action}) {
-    const [state, dispatch] = useReducer(loginFormReducer, initialState )
+function AuthForm({ onValidate, onSubmit, action }) {
+    const [state, dispatch] = useReducer(loginFormReducer, initialState)
 
     const handleChange = (e) => {
         dispatch({
@@ -19,24 +19,28 @@ function AuthForm({onValidate, onSubmit, action}) {
         const validationErrors = onValidate(state.values);
         if (Object.keys(validationErrors).length > 0) {
             Object.entries(validationErrors).forEach(([field, error]) => {
-                dispatch({type: formActions.setError, field, error})
+                dispatch({ type: formActions.setError, field, error })
             });
             return;
         };
         onSubmit(state.values);
-        dispatch({type: formActions.reset});
+        dispatch({ type: formActions.reset });
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="username">Username:</label>
-                <input type="text" name="username" value={state.values["username"]} onChange={handleChange} />
+            <div className="field-wrapper">
+                <div className="label-input-row">
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" name="username" value={state.values["username"]} onChange={handleChange} />
+                </div>
                 {state.errors["username"] && <p className="error">{state.errors["username"]}</p>}
             </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input type="password" name="password" value={state.values["password"]} onChange={handleChange} />
+            <div className="field-wrapper">
+                <div className="label-input-row">
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" name="password" value={state.values["password"]} onChange={handleChange} />
+                </div>
                 {state.errors["password"] && <p className="error">{state.errors["password"]}</p>}
             </div>
             <button type="submit">{action}</button>
