@@ -6,6 +6,7 @@ import com.app.entity.Series;
 import com.app.entity.User;
 import com.app.entity.dto.review.NewReviewRequest;
 import com.app.entity.dto.review.ReviewRequest;
+import com.app.entity.dto.review.UpdateReviewRequest;
 import com.app.repository.ReviewRepository;
 import com.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +68,35 @@ public class ReviewService {
         }
         
         reviewRepository.delete(review);
+    }
+
+    public Review updateReview(Long reviewId, UpdateReviewRequest updateRequest, String username) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new com.app.exception.ReviewNotFoundException(reviewId));
+        
+        User user = userRepository.findByUsername(username);
+        
+        // Check if the user is the owner of the review
+        if (!review.getUser().getId().equals(user.getId())) {
+            throw new com.app.exception.UnauthorizedReviewDeletionException();
+        }
+        
+        // Update rating if provided
+        if (updateRequest.rating() != null) {
+            Integer rating = updateRequest.rating();
+            if (rating < 0) {
+                rating = 0;
+            } else if (rating > 10) {
+                rating = 10;
+            }
+            review.setRating(rating);
+        }
+        
+        // Update comment if provided
+        if (updateRequest.comment() != null) {
+            review.setComment(updateRequest.comment());
+        }
+        
+        return reviewRepository.save(review);
     }
 }

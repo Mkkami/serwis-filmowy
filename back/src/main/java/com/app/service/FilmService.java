@@ -8,6 +8,7 @@ import com.app.entity.dto.film.CreateFilmRequest;
 import com.app.entity.dto.film.FilmRequest;
 import com.app.entity.dto.film.FullFilmRequest;
 import com.app.entity.dto.review.NewReviewRequest;
+import com.app.entity.dto.review.UpdateReviewRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.repository.FilmRepository;
 import com.app.repository.ReviewRepository;
@@ -110,6 +111,24 @@ public class FilmService {
         
         // Remove the review from the film's list and recalculate ratings
         film.removeReview(reviewToRemove);
+        filmRepository.save(film);
+    }
+
+    public void updateReview(Long filmId, Long reviewId, UpdateReviewRequest updateRequest, String username) {
+        Film film = filmRepository.findById(filmId).orElseThrow(() -> new FilmNotFoundException(filmId));
+        
+        // Verify the review belongs to this film
+        boolean reviewBelongsToFilm = film.getReviews().stream()
+                .anyMatch(review -> review.getId().equals(reviewId));
+        
+        if (!reviewBelongsToFilm) {
+            throw new com.app.exception.ReviewNotFoundException(reviewId);
+        }
+        
+        // Update the review (this will check authorization)
+        reviewService.updateReview(reviewId, updateRequest, username);
+        
+        // Refresh the film to recalculate ratings
         filmRepository.save(film);
     }
 }

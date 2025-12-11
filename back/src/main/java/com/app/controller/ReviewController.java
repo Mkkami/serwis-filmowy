@@ -2,6 +2,7 @@ package com.app.controller;
 
 import com.app.entity.dto.review.NewReviewRequest;
 import com.app.entity.dto.review.ReviewRequest;
+import com.app.entity.dto.review.UpdateReviewRequest;
 import com.app.exception.FilmNotFoundException;
 import com.app.exception.ReviewNotFoundException;
 import com.app.exception.SeriesNotFoundException;
@@ -60,6 +61,32 @@ public class ReviewController {
         try {
             seriesService.deleteReview(seriesId, reviewId, principal.getName());
             return ResponseEntity.ok("Review has been deleted");
+        } catch (ReviewNotFoundException | SeriesNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (com.app.exception.UnauthorizedReviewDeletionException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("film/{filmId}/review/{reviewId}")
+    public ResponseEntity<?> updateFilmReview(@PathVariable Long filmId, @PathVariable Long reviewId, 
+                                              @RequestBody UpdateReviewRequest updateRequest, Principal principal) {
+        try {
+            filmService.updateReview(filmId, reviewId, updateRequest, principal.getName());
+            return ResponseEntity.ok("Review has been updated");
+        } catch (ReviewNotFoundException | FilmNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (com.app.exception.UnauthorizedReviewDeletionException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("series/{seriesId}/review/{reviewId}")
+    public ResponseEntity<?> updateSeriesReview(@PathVariable Long seriesId, @PathVariable Long reviewId, 
+                                                @RequestBody UpdateReviewRequest updateRequest, Principal principal) {
+        try {
+            seriesService.updateReview(seriesId, reviewId, updateRequest, principal.getName());
+            return ResponseEntity.ok("Review has been updated");
         } catch (ReviewNotFoundException | SeriesNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (com.app.exception.UnauthorizedReviewDeletionException e) {

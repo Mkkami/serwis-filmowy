@@ -7,6 +7,7 @@ import com.app.entity.Series;
 import com.app.entity.dto.DtoMapper;
 import com.app.entity.dto.episode.NewEpisodeRequest;
 import com.app.entity.dto.review.NewReviewRequest;
+import com.app.entity.dto.review.UpdateReviewRequest;
 import com.app.entity.dto.series.CreateSeriesRequest;
 import com.app.entity.dto.series.FullSeriesRequest;
 import com.app.exception.EpisodeAlreadyExistsException;
@@ -99,6 +100,24 @@ public class SeriesService {
         
         // Remove the review from the series' list and recalculate ratings
         series.removeReview(reviewToRemove);
+        seriesRepository.save(series);
+    }
+
+    public void updateReview(Long seriesId, Long reviewId, UpdateReviewRequest updateRequest, String username) {
+        Series series = seriesRepository.findById(seriesId).orElseThrow(() -> new SeriesNotFoundException(seriesId));
+        
+        // Verify the review belongs to this series
+        boolean reviewBelongsToSeries = series.getReviews().stream()
+                .anyMatch(review -> review.getId().equals(reviewId));
+        
+        if (!reviewBelongsToSeries) {
+            throw new com.app.exception.ReviewNotFoundException(reviewId);
+        }
+        
+        // Update the review (this will check authorization)
+        reviewService.updateReview(reviewId, updateRequest, username);
+        
+        // Refresh the series to recalculate ratings
         seriesRepository.save(series);
     }
 
