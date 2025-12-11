@@ -89,9 +89,6 @@ public class UserRegistrationSteps {
 
     @And("komunikat błędu powinien informować o zbyt słabym haśle")
     public void komunikat_bledu_slabe_haslo() throws Exception {
-        // Note: This message depends on the implementation we haven't added yet.
-        // We expect the implementation to throw IllegalArgumentException with this
-        // message.
         resultActions.andExpect(content().string("Password is too weak"));
     }
 }
