@@ -40,13 +40,12 @@ public class FilmService {
         return DtoMapper.filmToFullDto(film);
     }
 
-//    public Page<FilmRequest> searchFilms(
-//            String title,
-//            List<Long> categoryId,
-//            Pageable pageable
-//    ) {
-//        return filmRepository.searchFilmsWithStats(title, categoryId, pageable);
-//    }
+    public Page<FilmRequest> searchFilms(
+            String title,
+            List<Long> categoryId,
+            Pageable pageable) {
+        return filmRepository.searchFilmsWithStats(title, categoryId, pageable);
+    }
 
     public Film createFilm(CreateFilmRequest filmRequest) {
         Film film = new Film();
@@ -63,12 +62,12 @@ public class FilmService {
     }
 
     public Film updateFilm(Long id, CreateFilmRequest filmRequest) {
-        Film film = filmRepository.findById(id).orElseThrow( () -> new FilmNotFoundException(id));
+        Film film = filmRepository.findById(id).orElseThrow(() -> new FilmNotFoundException(id));
         if (filmRequest.title() != null && !filmRequest.title().isBlank()) {
             film.setTitle(filmRequest.title());
         }
         if (filmRequest.categories() != null && !filmRequest.categories().isEmpty()) {
-            film.setCategories( filmRequest.categories().stream()
+            film.setCategories(filmRequest.categories().stream()
                     .map(cat -> categoryService.get(cat))
                     .collect(Collectors.toList()));
         }
@@ -83,7 +82,7 @@ public class FilmService {
     }
 
     public void deleteFilm(Long id) {
-        Film film = filmRepository.findById(id).orElseThrow( () -> new FilmNotFoundException(id));
+        Film film = filmRepository.findById(id).orElseThrow(() -> new FilmNotFoundException(id));
         filmRepository.delete(film);
     }
 
@@ -98,16 +97,16 @@ public class FilmService {
 
     public void deleteReview(Long filmId, Long reviewId, String username) {
         Film film = filmRepository.findById(filmId).orElseThrow(() -> new FilmNotFoundException(filmId));
-        
+
         // Find the review to remove
         Review reviewToRemove = film.getReviews().stream()
                 .filter(review -> review.getId().equals(reviewId))
                 .findFirst()
                 .orElseThrow(() -> new com.app.exception.ReviewNotFoundException(reviewId));
-        
+
         // This will check authorization and delete the review from database
         reviewService.deleteReview(reviewId, username);
-        
+
         // Remove the review from the film's list and recalculate ratings
         film.removeReview(reviewToRemove);
         filmRepository.save(film);

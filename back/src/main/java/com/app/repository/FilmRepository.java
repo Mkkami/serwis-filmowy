@@ -18,5 +18,19 @@ public interface FilmRepository extends JpaRepository<Film, Long>, JpaSpecificat
             """)
     public List<Film> getAll();
 
+    @Query("""
+            SELECT new com.app.entity.dto.film.FilmRequest(
+                f.id, f.title, f.releaseYear, f.averageRating, f.reviewCount
+            )
+            FROM Film f
+            LEFT JOIN f.categories c
+            WHERE (:title IS NULL OR LOWER(f.title) LIKE LOWER(CONCAT('%', :title, '%')))
+            AND (:categories IS NULL OR c.id IN :categories)
+            GROUP BY f.id, f.title, f.releaseYear, f.averageRating, f.reviewCount
+            """)
+    Page<FilmRequest> searchFilmsWithStats(
+            @Param("title") String title,
+            @Param("categories") List<Long> categories,
+            Pageable pageable);
 
 }

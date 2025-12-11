@@ -26,30 +26,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests( auth -> auth
-                .requestMatchers("/search**", "/register", "/film**", "/series/**", "/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
-                .anyRequest().authenticated())
-            .formLogin(form -> form
-                .loginProcessingUrl("/login")
-                .successHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))
-                .failureHandler((req, res, ex) ->res.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
-                .permitAll())
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID"))
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/search/**", "/register", "/film/**", "/series/**", "/public/**",
+                                "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginProcessingUrl("/login")
+                        .successHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK))
+                        .failureHandler((req, res, ex) -> res.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"))
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                         .sessionFixation(sessionFixation -> sessionFixation.migrateSession()))
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint((request, response, authException) ->
-                                // Set the response status to 401 Unauthorized for unauthenticated access
-                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)))
+                        // Set the response status to 401 Unauthorized for unauthenticated access
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)))
 
-            .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
-            .userDetailsService(userDetailsService);
+                .addFilterBefore(new CustomFilter(), UsernamePasswordAuthenticationFilter.class)
+                .userDetailsService(userDetailsService);
         return http.build();
     }
 

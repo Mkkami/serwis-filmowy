@@ -48,7 +48,7 @@ public class FilmController {
     }
 
     @PutMapping("film/{id}")
-    public ResponseEntity<?> updateFilm(@PathVariable Long id,@RequestBody CreateFilmRequest filmRequest) {
+    public ResponseEntity<?> updateFilm(@PathVariable Long id, @RequestBody CreateFilmRequest filmRequest) {
         Film updatedFilm;
         try {
             updatedFilm = filmService.updateFilm(id, filmRequest);
@@ -57,6 +57,7 @@ public class FilmController {
         }
         return ResponseEntity.ok().body(updatedFilm);
     }
+
     @PatchMapping("film/{id}")
     public ResponseEntity<?> patchFilm(@PathVariable Long id, @RequestBody CreateFilmRequest filmRequest) {
         Film updatedFilm;
@@ -78,21 +79,20 @@ public class FilmController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-//    @GetMapping("film/search")
-//    public ResponseEntity<Page<FilmRequest>> search(
-//            @RequestParam(defaultValue = "") String title,
-//            @RequestParam(required = false) List<Long> categories,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "title") String sortBy,
-//            @RequestParam(defaultValue = "asc") String direction
-//    ) {
-//        int pageSize = 20;
-//
-//        Sort sort = direction.equalsIgnoreCase("desc")
-//                ? Sort.by(sortBy).descending()
-//                : Sort.by(sortBy).ascending();
-//
-//        Pageable pageable = PageRequest.of(page, pageSize, sort);
-//        return ResponseEntity.ok().body(filmService.searchFilms(title, categories, pageable));
-//    }
+    @GetMapping("film/search")
+    public ResponseEntity<Page<FilmRequest>> search(
+            @RequestParam(defaultValue = "") String title,
+            @RequestParam(required = false) List<Long> categories,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "title") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        int pageSize = 20;
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return ResponseEntity.ok().body(filmService.searchFilms(title, categories, pageable));
+    }
 }
