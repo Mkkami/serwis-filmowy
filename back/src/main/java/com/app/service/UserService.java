@@ -18,8 +18,12 @@ public class UserService {
 
     public void createUser(UserLoginRequest loginRequest) {
         if (loginRequest.username() == null || loginRequest.username().isBlank() ||
-            loginRequest.password() == null || loginRequest.password().isBlank()) {
+                loginRequest.password() == null || loginRequest.password().isBlank()) {
             throw new IllegalArgumentException("Username and password must not be empty");
+        }
+
+        if (loginRequest.password().length() < 8) {
+            throw new IllegalArgumentException("Password is too weak");
         }
 
         if (userRepository.findByUsername(loginRequest.username()) != null) {
@@ -28,8 +32,7 @@ public class UserService {
         User user = new User();
         user.setUsername(loginRequest.username());
         user.setPassword(
-                passwordEncoder.encode(loginRequest.password())
-        );
+                passwordEncoder.encode(loginRequest.password()));
         userRepository.save(user);
     }
 
