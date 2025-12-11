@@ -19,7 +19,7 @@
 }
 
 .sort {
-    border-bottom: 2px solid var(--orange);
+    border-bottom: 2px solid var(--orange-dark);
     padding: 0 1em;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .sort button.selected {
-    color: var(--orange);
+    color: var(--orange-second);
 }
 
 .media-card {
@@ -46,7 +46,7 @@
     background-color: var(--bg-second);
     left: 40%;
     right: 40%;
-    border: 1px solid var(--purple);
+    border: 1px solid var(--text);
     font-weight: bold;
     border-radius: 8px;
 }

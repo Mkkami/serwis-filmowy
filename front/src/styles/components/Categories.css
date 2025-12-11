@@ -9,7 +9,7 @@
 }
 
 .categories.height-limit {
-   max-height: 200px; 
+   height: 200px; 
 }
 
 @media (width <= 750px) {
@@ -35,13 +35,13 @@
 .fade-bottom::after {
     bottom: 0;
     background-image:
-        linear-gradient(to top, var(--purple-subtle), transparent);
+        linear-gradient(to top, var(--yellow-dark) , transparent, transparent);
 }
 
 .fade-top::before {
     top: 0;
     background-image:
-        linear-gradient(to bottom, var(--purple-subtle), transparent);
+        linear-gradient(to bottom, var(--yellow-dark), transparent, transparent);
 }
 
 .categories label {

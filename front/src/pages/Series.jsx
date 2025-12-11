@@ -12,7 +12,7 @@ function Series() {
     useEffect(() => {
         const getSeriesDetails = async (id) => {
             const res = await getSeries(id);
-            
+
             if (!res.ok) {
                 return;
             }
@@ -23,6 +23,7 @@ function Series() {
 
         }
         getSeriesDetails(params.id);
+        console.log(seriesData)
     }, [params])
 
 
@@ -44,8 +45,8 @@ function Series() {
                     return (cat.name + ", ")
                 })}</p>
             </div>
-            <Episodes id={seriesData.id}/>
-            <Reviews reviews={seriesData.reviews} type={"SERIES"} id={seriesData.id}/>
+            <Episodes id={seriesData.id} />
+            <Reviews reviews={seriesData.reviews} type={"SERIES"} id={seriesData.id} />
         </div>
     )
 }

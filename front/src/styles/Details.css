@@ -6,7 +6,7 @@
     padding: 0 2em;
 }
 
-@media (width <= 500px) {
+@media (width <=500px) {
     .info {
         padding: 0;
     }
@@ -19,16 +19,6 @@ main {
 
 h1 {
     text-align: center;
-}
-
-.reviews {
-    border-top: 2px solid var(--bg-highlight);
-}
-
-.review-card {
-    margin: 1em;
-    display: flex;
-    border-bottom: 1px solid var(--purple);
 }
 
 .score {

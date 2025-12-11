@@ -57,6 +57,16 @@ public class FilmController {
         }
         return ResponseEntity.ok().body(updatedFilm);
     }
+    @PatchMapping("film/{id}")
+    public ResponseEntity<?> patchFilm(@PathVariable Long id, @RequestBody CreateFilmRequest filmRequest) {
+        Film updatedFilm;
+        try {
+            updatedFilm = filmService.updateFilm(id, filmRequest);
+        } catch (FilmNotFoundException e) {
+            return ResponseEntity.badRequest().body("Film not found");
+        }
+        return ResponseEntity.ok().body(updatedFilm);
+    }
 
     @DeleteMapping("film/{id}")
     public ResponseEntity<?> deleteFilm(@PathVariable Long id) {

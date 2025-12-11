@@ -1,4 +1,8 @@
 dialog {
+    display: none;
+}
+
+dialog[open] {
     position: fixed;
     top: 50%;
     bottom: 50%;
@@ -7,6 +11,8 @@ dialog {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    background-color: var(--bg-second);
+    border: 1px solid var(--text-second);
 
 }
 
@@ -19,16 +25,19 @@ dialog > div button {
 }
 
 dialog::backdrop {
-    background-color: red;
+    backdrop-filter: blur(4px);
 }
 
 .close-btn {
     flex: 0;
-    color: var(--text-second);
+    color: var(--text);
     background-color: transparent;
     border: none;
+    font-weight: bold;
+
 }
 
 .close-btn:hover {
-    color: var(--text-heading);
+    color: var(--orange-primary);
+    border: none;
 }

@@ -10,24 +10,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --bg: hsl(0,0%,5%);
-  --bg-second: hsl(0,0%, 10%);
-  --bg-highlight: hsl(0,0%, 20%);
+  --bg: hsl(220,5%,12%);
+  --bg-second: hsl(220,4%, 8%);
+  --bg-highlight: hsl(220,6%, 18%);
 
-  --purple: hsl(270, 80%, 65%);
-  --purple-subtle: hsl(270, 40%, 20%);
+  --orange-primary: hsl(25, 100%, 50%);
+  --orange-second: hsl(25, 90%, 70%);
+  --orange-dark: hsl(25, 80%, 35%);
 
-  --orange: hsl(30, 90%, 65%);
+  --yellow-primary: hsl(45, 100%, 55%);
+  --yellow-second: hsl(45, 100%, 75%);
+  --yellow-dark: hsl(45, 80%, 35%);
 
-  --text-heading: hsl(0,0%, 90%);
-  --text: hsl(0,0%, 80%);
-  --text-second: hsl(0, 0%, 50%);
+  --text-heading: hsl(0,0%, 100%);
+  --text: hsl(0,0%, 90%);
+  --text-second: hsl(0, 0%, 55%);
 
   --error: hsl(0, 70%, 55%);
 }
 
 a {
   text-decoration: inherit;
+  color: var(--yellow-primary)
 }
 
 body {
@@ -41,25 +45,6 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-
-  background-color: var(--bg-highlight);
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 
 body {
   background-color: var(--bg);
@@ -72,16 +57,14 @@ label, p {
 
 input {
   font-size: 1.125rem;
+  background-color: var(--bg-highlight);
+  border: 2px solid var(--text-second)
 }
 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    --main: hsl(0,0%,95%);
-    --secondary: hsl(0,0%, 10%);
-    --highlight: hsl(0,0%, 20%);
+input:is(:-webkit-autofill, :auto-fill):focus {
+  outline: 2px solid darkorange;
+}
 
-    --text-heading: hsl(0,0%, 90%);
-    --text: hsl(0,0%, 80%);
-  }
-} */
-
+:focus:focus-visible {
+  outline: 2px solid var(--yellow-primary);
+}

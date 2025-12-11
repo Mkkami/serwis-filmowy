@@ -6,13 +6,6 @@ form > *{
     color: red;
 }
 
-.form {
-    border: 2px solid black;
-    border-radius: 8px;
-    background-color: var(--bg-second);
-    padding: 1rem;
-}
-
 @media (width <= 500px) {
     .form {
         padding: 0;

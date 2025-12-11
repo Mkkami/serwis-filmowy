@@ -29,7 +29,7 @@ function SearchResult() {
         const categoryIdsString = searchParams.get('categoryIds');
         const categoryIds = categoryIdsString ? categoryIdsString.split(',') : initParams.categoryIds;
 
-        return {title, categoryIds, page, sortBy, sortDirection};
+        return { title, categoryIds, page, sortBy, sortDirection };
     }, [searchParams])
 
     useEffect(() => {
@@ -44,7 +44,7 @@ function SearchResult() {
             setIsLoading(false);
         }
         fetchData();
-        
+
     }, [currentParams, searchParams])
 
     const updateSearch = (newParams) => {
@@ -68,15 +68,15 @@ function SearchResult() {
 
 
         setCategories(cats);
-        updateSearch({categoryIds: catIds, page: 0})
+        updateSearch({ categoryIds: catIds, page: 0 })
     }
 
     const updateSort = (newSortBy) => {
         const newDirection = currentParams.sortBy == newSortBy && currentParams.sortDirection === 'asc'
-        ? "desc"
-        : "asc";
+            ? "desc"
+            : "asc";
         setSelectedSort(newSortBy);
-        updateSearch({sortBy: newSortBy, sortDirection: newDirection, page: 0})
+        updateSearch({ sortBy: newSortBy, sortDirection: newDirection, page: 0 })
     }
 
     const sortDisplay = (el) => {
@@ -86,7 +86,7 @@ function SearchResult() {
             } else {
                 return <>&#9650;</>;
             }
-            
+
         }
         return <>&#9660;</>;
     }
@@ -104,11 +104,11 @@ function SearchResult() {
                     <button className={`${selectedSort == 'averageRating' ? "selected" : ""}`} onClick={() => updateSort('averageRating')}>{sortDisplay('averageRating')} Score</button>
                     <button className={`${selectedSort == 'ratingCount' ? "selected" : ""}`} onClick={() => updateSort('ratingCount')}>{sortDisplay('ratingCount')} Number of reviews</button>
                     <button className={`${selectedSort == 'releaseYear' ? "selected" : ""}`} onClick={() => updateSort('releaseYear')}>{sortDisplay('releaseYear')} Year</button>
-                
+
                 </div>
                 <div className="results">
                     {!isLoading ? results.map(res =>
-                        <div key={res.id} className="media-card" onClick={() => openDetails(res.mediaType, res.id)} >
+                        <div key={`${res.mediaType}-${res.id}`} className="media-card" onClick={() => openDetails(res.mediaType, res.id)} >
                             <span className="media-type">{res.mediaType}</span>
                             <div className="info">
                                 <h3>{res.title}</h3>
@@ -117,11 +117,11 @@ function SearchResult() {
                             <p className="rating">{res.averageRating}/10 ({res.reviewCount})</p>
                         </div>
                     )
-                    :
-                    <p>Loading...</p>}
+                        :
+                        <p>Loading...</p>}
                 </div>
             </div>
-            <Categories style={{innerHeight: "1000px"}} selectedCategories={cateogries} setSelectedCategories={updateCategories}/>
+            <Categories style={{ innerHeight: "1000px" }} selectedCategories={cateogries} setSelectedCategories={updateCategories} />
         </div>
     )
 }
