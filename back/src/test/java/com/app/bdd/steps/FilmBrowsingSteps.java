@@ -2,10 +2,8 @@ package com.app.bdd.steps;
 
 import com.app.entity.Category;
 import com.app.entity.Film;
-import com.app.entity.User;
 import com.app.repository.CategoryRepository;
 import com.app.repository.FilmRepository;
-import com.app.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +12,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -24,7 +20,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class FilmBrowsingSteps {
@@ -39,15 +34,8 @@ public class FilmBrowsingSteps {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
-    private MockHttpSession session;
     private ResultActions resultActions;
 
     @Given("w systemie istnieją następujące filmy:")
