@@ -23,3 +23,20 @@ Feature: Recenzowanie filmów
     When użytkownik wyświetla szczegóły filmu "Tenet"
     Then lista recenzji zawiera 2 pozycje
     And średnia ocena filmu "Tenet" wynosi 3.0
+
+  Scenario: Usunięcie własnej recenzji
+    Given użytkownik "agnieszka" dodała recenzję do filmu "Parasite"
+    When użytkownik usuwa swoją recenzję z filmu "Parasite"
+    Then recenzja zostaje usunięta z systemu
+    And średnia ocena filmu "Parasite" wynosi 0.0
+
+  Scenario: Próba usunięcia recenzji innego użytkownika
+    Given w systemie istnieje recenzja użytkownika "user3" do filmu "Parasite"
+    When użytkownik "agnieszka" próbuje usunąć recenzję użytkownika "user3" z filmu "Parasite"
+    Then system odrzuca próbę usunięcia recenzji
+
+  Scenario: Edycja własnej recenzji
+    Given użytkownik "agnieszka" dodała recenzję do filmu "Parasite" z oceną 4 i komentarzem "Dobre kino"
+    When użytkownik edytuje swoją recenzję do filmu "Parasite", zmieniając ocenę na 5 i komentarz na "Rewelacyjne kino"
+    Then recenzja zostaje zaktualizowana w systemie
+    And średnia ocena filmu "Parasite" wynosi 5.0

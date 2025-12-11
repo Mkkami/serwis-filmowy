@@ -17,3 +17,8 @@ Feature: Logowanie i wylogowanie użytkownika
     Given użytkownik "jan_kowalski" z hasłem "Haslo123!" jest zalogowany do systemu
     When użytkownik wylogowuje się
     Then wylogowanie powinno zakończyć się sukcesem
+
+  Scenario: Próba logowania z nieistniejącym użytkownikiem
+    Given użytkownik "nieistniejacy_user" nie istnieje w systemie
+    When użytkownik loguje się używając nazwy "nieistniejacy_user" i hasła "JakiesHaslo123!"
+    Then logowanie powinno zakończyć się błędem autoryzacji

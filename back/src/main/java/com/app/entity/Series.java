@@ -39,7 +39,7 @@ public class Series {
     private Integer reviewCount = 0;
 
     public Float averageRating() {
-        return ((float) reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
+        return (float) reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
     }
 
     public Integer countRatings() {

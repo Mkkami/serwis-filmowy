@@ -1,5 +1,16 @@
 #rating {
-    width: 5ch;
+    width: 4ch;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .reviews {
@@ -12,4 +23,23 @@
     margin: 1em;
     display: flex;
     /* border-bottom: 1px solid var(--text-second); */
+}
+
+dialog>button {
+    background-color: transparent;
+}
+
+dialog>form {
+    display: table;
+    padding: 1em 2em;
+}
+
+dialog>form>div {
+    display: table-row;
+}
+
+dialog>form>div>label,
+dialog>form>div>input {
+    display: table-cell;
+    margin: 0.6em 0.2em;
 }

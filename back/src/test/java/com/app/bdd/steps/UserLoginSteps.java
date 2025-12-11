@@ -119,4 +119,13 @@ public class UserLoginSteps {
         // I'll put a placeholder expectation.
         resultActions.andExpect(status().is3xxRedirection());
     }
+
+    @Given("użytkownik {string} nie istnieje w systemie")
+    public void uzytkownik_nie_istnieje_w_systemie(String username) {
+        // Ensure the user does NOT exist
+        User existingUser = userRepository.findByUsername(username);
+        if (existingUser != null) {
+            userRepository.delete(existingUser);
+        }
+    }
 }

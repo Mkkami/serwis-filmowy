@@ -41,7 +41,7 @@ public class Film {
     }
 
     public Double averageRating() {
-        return ( reviews.stream().mapToInt(Review::getRating).average().orElse(Double.NaN));
+        return reviews.stream().mapToInt(Review::getRating).average().orElse(0.0);
     }
 
     public Integer countRatings() {

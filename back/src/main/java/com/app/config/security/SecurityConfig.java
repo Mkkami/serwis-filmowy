@@ -43,7 +43,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID"))
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .sessionFixation(sessionFixation -> sessionFixation.migrateSession()))
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint((request, response, authException) ->

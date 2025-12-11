@@ -32,3 +32,20 @@ Feature: Przeglądanie i wyszukiwanie filmów
     Then system zwraca poprawne szczegóły filmu
     And zwrócony tytuł to "Incepcja"
     And zwrócony rok produkcji to 2010
+
+  Scenario: Sortowanie filmów po ocenie
+    When użytkownik sortuje filmy według oceny malejąco
+    Then system zwraca listę zawierającą 5 filmów posortowanych według oceny
+    And pierwszy film na liście to "Ojciec Chrzestny"
+    And ostatni film na liście to "Matrix Reloaded"
+
+  Scenario: Sortowanie filmów po roku produkcji
+    When użytkownik sortuje filmy według roku produkcji rosnąco
+    Then system zwraca listę zawierającą 5 filmów posortowanych według roku produkcji
+    And pierwszy film na liście to "Ojciec Chrzestny"
+    And ostatni film na liście to "Incepcja"
+
+  Scenario: Wyszukiwanie filmu, który nie istnieje
+    When użytkownik wyszukuje filmy wpisując frazę "Nieistniejący film"
+    Then system zwraca pustą listę filmów
+    And komunikat informuje, że nie znaleziono żadnych filmów

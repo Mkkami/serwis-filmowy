@@ -202,4 +202,97 @@ public class FilmBrowsingSteps {
         JsonNode node = objectMapper.readTree(content);
         assertEquals(year, node.path("releaseYear").asInt());
     }
+
+    @When("użytkownik sortuje filmy według oceny malejąco")
+    public void uzytkownik_sortuje_filmy_wedlug_oceny_malejaco() throws Exception {
+        resultActions = mockMvc.perform(get("/film/search")
+                .param("sortBy", "averageRating")
+                .param("direction", "desc"));
+    }
+
+    @Then("system zwraca listę zawierającą {int} filmów posortowanych według oceny")
+    public void system_zwraca_liste_posortowana_wedlug_oceny(int count) throws Exception {
+        resultActions.andExpect(status().isOk());
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        JsonNode contentNode = root.path("content");
+        
+        assertEquals(count, contentNode.size());
+        
+        // Verify descending order
+        double previousRating = Double.MAX_VALUE;
+        for (JsonNode node : contentNode) {
+            double currentRating = node.path("averageRating").asDouble();
+            assertTrue(currentRating <= previousRating, 
+                "Films should be sorted by rating in descending order");
+            previousRating = currentRating;
+        }
+    }
+
+    @Then("pierwszy film na liście to {string}")
+    public void pierwszy_film_na_liscie_to(String title) throws Exception {
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        JsonNode contentNode = root.path("content");
+        
+        assertTrue(contentNode.isArray() && contentNode.size() > 0);
+        assertEquals(title, contentNode.get(0).path("title").asText());
+    }
+
+    @Then("ostatni film na liście to {string}")
+    public void ostatni_film_na_liscie_to(String title) throws Exception {
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        JsonNode contentNode = root.path("content");
+        
+        assertTrue(contentNode.isArray() && contentNode.size() > 0);
+        int lastIndex = contentNode.size() - 1;
+        assertEquals(title, contentNode.get(lastIndex).path("title").asText());
+    }
+
+    @Then("system zwraca pustą listę filmów")
+    public void system_zwraca_pusta_liste_filmow() throws Exception {
+        resultActions.andExpect(status().isOk());
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        JsonNode contentNode = root.path("content");
+        
+        assertEquals(0, contentNode.size());
+    }
+
+    @Then("komunikat informuje, że nie znaleziono żadnych filmów")
+    public void komunikat_informuje_ze_nie_znaleziono_filmow() throws Exception {
+        // This step verifies that empty list is returned properly
+        // The actual message might be on frontend side
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        
+        assertTrue(root.path("content").isEmpty() || root.path("content").size() == 0);
+    }
+
+    @When("użytkownik sortuje filmy według roku produkcji rosnąco")
+    public void uzytkownik_sortuje_filmy_wedlug_roku_produkcji_rosnaco() throws Exception {
+        resultActions = mockMvc.perform(get("/film/search")
+                .param("sortBy", "releaseYear")
+                .param("direction", "asc"));
+    }
+
+    @Then("system zwraca listę zawierającą {int} filmów posortowanych według roku produkcji")
+    public void system_zwraca_liste_posortowana_wedlug_roku_produkcji(int count) throws Exception {
+        resultActions.andExpect(status().isOk());
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JsonNode root = objectMapper.readTree(content);
+        JsonNode contentNode = root.path("content");
+        
+        assertEquals(count, contentNode.size());
+        
+        // Verify ascending order by release year
+        int previousYear = Integer.MIN_VALUE;
+        for (JsonNode node : contentNode) {
+            int currentYear = node.path("releaseYear").asInt();
+            assertTrue(currentYear >= previousYear, 
+                "Films should be sorted by release year in ascending order");
+            previousYear = currentYear;
+        }
+    }
 }
