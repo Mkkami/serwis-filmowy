@@ -47,7 +47,7 @@ class UserServiceTest {
     @Test
     void createUser_WhenUserAlreadyExists_ShouldThrowException() {
         // Given
-        UserLoginRequest request = new UserLoginRequest("existingUser", "pass");
+        UserLoginRequest request = new UserLoginRequest("existingUser", "password123");
         when(userRepository.findByUsername("existingUser")).thenReturn(new User());
 
         // When & Then
