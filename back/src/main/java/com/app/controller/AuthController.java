@@ -2,9 +2,7 @@ package com.app.controller;
 
 import com.app.entity.dto.UserLoginRequest;
 import com.app.exception.UserAlreadyExistsException;
-import com.app.repository.UserRepository;
 import com.app.service.UserService;
-import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,11 +44,5 @@ public class AuthController {
     public ResponseEntity<Void> checkAuthStatus() {
         return ResponseEntity.ok().build();
     }
-
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody UserLoginRequest login) {
-//
-//        return ResponseEntity.ok("Login successful");
-//    }
 
 }
