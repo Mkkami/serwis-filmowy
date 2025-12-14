@@ -40,13 +40,13 @@ function Series() {
             <h1>{seriesData.title}</h1>
             <div className="details">
                 <p>Release year: {seriesData.releaseYear}</p>
-                <p>End year: {seriesData.duration ?? "-"}</p>
+                <p>End year: {seriesData.endYear}</p>
                 <p>Categories: {seriesData.categories.map(cat => {
                     return (cat.name + ", ")
                 })}</p>
             </div>
             <Episodes id={seriesData.id} />
-            <Reviews reviews={seriesData.reviews} type={"SERIES"} id={seriesData.id} />
+            <Reviews reviews={seriesData.reviews} type={"series"} id={seriesData.id} />
         </div>
     )
 }

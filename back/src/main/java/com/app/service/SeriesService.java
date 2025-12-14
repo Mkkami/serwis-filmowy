@@ -45,8 +45,9 @@ public class SeriesService {
     public Series createSeries(CreateSeriesRequest SeriesRequest) {
         Series series = new Series();
         series.setTitle(SeriesRequest.title());
-//        series.setDuration(SeriesRequest.duration() > 0 ? SeriesRequest.duration() : 0);
+
         series.setReleaseYear(SeriesRequest.releaseYear() > 0 ? SeriesRequest.releaseYear() : 0);
+        series.setEndYear(SeriesRequest.endYear() > 0 ? SeriesRequest.endYear() : 0);
         List<Category> categories = SeriesRequest.categories().stream()
                 .map(cat -> categoryService.get(cat))
                 .collect(Collectors.toList());
