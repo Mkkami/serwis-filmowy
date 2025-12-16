@@ -76,19 +76,17 @@ function SearchResult() {
             ? "desc"
             : "asc";
         setSelectedSort(newSortBy);
+        console.log("Sorting by:", newSortBy, "Direction:", newDirection);
         updateSearch({ sortBy: newSortBy, sortDirection: newDirection, page: 0 })
     }
 
     const sortDisplay = (el) => {
-        if (el == searchParams.get('sortBy')) {
-            if (searchParams.get('sortDirection') === "asc") {
-                return <>&#9660;</>;
-            } else {
-                return <>&#9650;</>;
-            }
-
+        const active = searchParams.get('sortBy');
+        const dir = searchParams.get('sortDirection');
+        if (el === active) {
+            return dir === 'desc' ? <>&#9660;</> : <>&#9650;</>;
         }
-        return <>&#9660;</>;
+        return null;
     }
 
     const openDetails = (type, id) => {
