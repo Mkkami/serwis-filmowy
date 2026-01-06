@@ -1,0 +1,11 @@
+{
+  "name": "microbenchmarks",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node suite.js"
+  },
+  "dependencies": {
+    "tinybench": "^2.5.1"
+  }
+}

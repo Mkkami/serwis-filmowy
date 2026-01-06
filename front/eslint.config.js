@@ -66,4 +66,13 @@ export default defineConfig([
       },
     },
   },
+  // Konfiguracja dla benchmarków
+  {
+    files: ['benchmarks/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ]);
