@@ -1,0 +1,27 @@
+{
+  "validUser": {
+    "username": "testuser",
+    "password": "testpassword123"
+  },
+  "invalidUser": {
+    "username": "wronguser",
+    "password": "wrongpassword"
+  },
+  "newUser": {
+    "username": "newuser",
+    "password": "newpassword123"
+  },
+  "movieTitles": [
+    "The Matrix",
+    "Inception",
+    "Interstellar",
+    "Avatar",
+    "The Godfather",
+    "Pulp Fiction",
+    "The Dark Knight",
+    "Forrest Gump",
+    "Fight Club",
+    "The Shawshank Redemption"
+  ],
+  "searchQueries": ["action", "comedy", "drama", "thriller", "sci-fi"]
+}

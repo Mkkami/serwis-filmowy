@@ -1,0 +1,15 @@
+{
+  "name": "selenium-js-tests",
+  "version": "1.0.0",
+  "description": "Selenium tests for comparison with Cypress",
+  "scripts": {
+    "test": "mocha test/**/*.spec.js --timeout 60000",
+    "test:search": "mocha test/search.spec.js --timeout 30000",
+    "test:perf": "mocha test/performance.spec.js --timeout 60000"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.16.0",
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10"
+  }
+}
