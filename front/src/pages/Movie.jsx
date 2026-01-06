@@ -11,7 +11,7 @@ function Movie() {
     useEffect(() => {
         const getFilmDetails = async (id) => {
             const res = await getFilm(id);
-            
+
             if (!res.ok) {
                 return;
             }
@@ -43,7 +43,7 @@ function Movie() {
                     return (cat.name + ", ")
                 })}</p>
             </div>
-            <Reviews reviews={filmData.reviews} type="FILM" id={filmData.id}/>
+            <Reviews reviews={filmData.reviews} type="film" id={filmData.id} />
         </div>
     )
 }
