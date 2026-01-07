@@ -7,19 +7,19 @@
 #### **Selenium**
 - **Proces instalacji**: 
   - Biblioteka Selenium WebDriver przez npm
-  - WebDriver dla wybranej przeglądarki (ChromeDriver, GeckoDriver, EdgeDriver)
+  - Od wersji 4.6+ Selenium Manager automatycznie pobiera odpowiednie drivery
   - Framework testowy (Mocha, Jest)
   
 - **Konfiguracja**:
-  - Wymaga zarządzania wersjami driverów
+  - Selenium Manager automatycznie zarządza wersjami driverów
   - Dodatkowa konfiguracja frameworka testowego
   
-- **Złożoność**: Średnia - więcej początkowego wysiłku niż Cypress
+- **Złożoność**: Niska (dla Selenium 4.6+)
 
 **Przykład instalacji**:
 ```bash
 npm install selenium-webdriver --save-dev
-npm install chromedriver --save-dev
+# Selenium Manager automatycznie pobierze drivery
 ```
 
 #### **Cypress**
@@ -42,8 +42,8 @@ npx cypress open
 ```
 
 **Wnioski**:
-- **Cypress** jest prostszy w instalacji, ale ograniczony do ekosystemu JavaScript
-- **Selenium** wymaga więcej konfiguracji, ale wspiera wiele języków programowania
+- **Obie** mają prostą instalację (Selenium 4.6+ z Selenium Manager, Cypress out-of-the-box)
+- **Selenium** wspiera wiele języków programowania, **Cypress** tylko JavaScript/TypeScript
 
 
 ---
@@ -64,7 +64,29 @@ npx cypress open
 
 ---
 
-### c) Wyszukiwanie elementów na stronie internetowej
+### c) Łatwość pisania testów
+
+#### **Selenium**
+- Wymaga inicjalizacji WebDrivera i zarządzania sesją przeglądarki
+- Konieczność używania `async/await` lub callbacków
+- Więcej boilerplate code
+- Ręczne zarządzanie czekaniem na elementy
+
+#### **Cypress**
+- Brak potrzeby inicjalizacji przeglądarki
+- Proste, chainable API
+- Minimalny boilerplate code
+- Automatyczne czekanie i retry
+
+**Wnioski**:
+- **Cypress** ma znacznie prostszą składnię - mniej kodu do napisania
+- **Cypress** nie wymaga zarządzania sesją przeglądarki
+- **Selenium** wymaga więcej boilerplate code i jawnego zarządzania stanem
+- **Cypress** jest bardziej czytelny i intuicyjny dla deweloperów
+
+---
+
+### d) Wyszukiwanie elementów na stronie internetowej
 
 #### **Selenium**
 - ID, Name, Class Name, CSS Selectors, XPath (pełna obsługa)
@@ -106,7 +128,7 @@ cy.contains('Submit').click()
 
 ---
 
-### d) Zrównoleglenie testów
+### e) Zrównoleglenie testów
 
 #### **Selenium**
 - Selenium Grid - wymaga dodatkowej konfiguracji
@@ -132,7 +154,7 @@ cypress run --record --parallel --key=your-key
 
 ---
 
-### e) Oczekiwanie na wczytanie aplikacji webowej lub pojawienie się nowego elementu
+### f) Oczekiwanie na wczytanie aplikacji webowej lub pojawienie się nowego elementu
 
 #### **Selenium**
 - Implicit Wait, Explicit Wait, Fluent Wait
@@ -172,7 +194,7 @@ cy.wait('@getData')
 
 ---
 
-### f) Szybkość wykonywania testów
+### g) Szybkość wykonywania testów
 
 #### **Selenium**
 - Komunikacja przez WebDriver (dodatkowy overhead)
@@ -196,7 +218,7 @@ Cypress (headless, sekwencyjnie):      4-7 minut
 
 ---
 
-### g) Obciążenie procesora i pamięci RAM
+### h) Obciążenie procesora i pamięci RAM
 
 #### **Selenium**
 - Każda instancja przeglądarki: 200-500 MB RAM
@@ -217,7 +239,7 @@ Cypress (headless, sekwencyjnie):      4-7 minut
 
 ---
 
-### h) Generowanie raportów
+### i) Generowanie raportów
 
 #### **Selenium**
 - Brak wbudowanego systemu raportowania
@@ -248,8 +270,6 @@ Cypress ma:
 
 **Wnioski**: **Cypress** ma znacznie lepsze wbudowane wsparcie dla raportowania
 
-
-
 ---
 
 ## 3. Podsumowanie porównawcze
@@ -258,8 +278,9 @@ Cypress ma:
 
 | Kryterium | Selenium | Cypress | Zwycięzca |
 |-----------|----------|---------|-----------|
-| **Instalacja i konfiguracja** | Średnio złożona, wymaga driverów | Prosta, all-in-one | **Cypress** |
+| **Instalacja i konfiguracja** | Prosta (Selenium 4.6+) | Prosta, all-in-one | **Remis** |
 | **Dokumentacja** | Obszerna, ale rozproszona | Doskonała, spójna | **Cypress** |
+| **Łatwość pisania testów** | Więcej boilerplate, async/await | Prosta składnia, chainable API | **Cypress** |
 | **Wyszukiwanie elementów** | Bardzo elastyczne (XPath) | Proste, automatyczne retry | **Remis** |
 | **Zrównoleglenie testów** | Grid, pełna kontrola | Proste, ale płatne dla pełni możliwości | **Selenium** |
 | **Oczekiwanie na elementy** | Ręczne, wymaga doświadczenia | Automatyczne, inteligentne | **Cypress** |
@@ -320,6 +341,6 @@ Można używać obu narzędzi:
 - Łatwiejszy start, szybsze wyniki, mniejsze utrzymanie
 
 **Dla projektów wymagających szerokiego wsparcia przeglądarek** → **Selenium**
--Większa elastyczność, sprawdzone rozwiązanie
+- Większa elastyczność, sprawdzone rozwiązanie
 
 **Kluczowa różnica**: Cypress działa tylko z JavaScript/TypeScript, Selenium wspiera wiele języków
